@@ -5,10 +5,12 @@ import './index.css';
 import { createRoutesFromElements, Route } from "react-router";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./components/Login/Login.jsx";
+import LandingPage from "./components/Landing/LandingPage.jsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<App />}>
+            <Route path='' element={<LandingPage/>} />
             <Route path='/login' element={<Login />} />
         </Route>
     )
