@@ -10,8 +10,8 @@ import SignUp from "./components/SignUp/SignUp.jsx";
 import HomePage from "./components/Home/Home.jsx";
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='/' element={<App />}>
-            <Route path='/information_Page' element={<LandingPage/>} />
+        <Route path='' element={<App />}>
+            <Route path='/' element={<LandingPage/>} />
             <Route path='/home_page' element={<HomePage/>} />
             <Route path='/login' element={<Login />} />
             <Route path='/SignUp' element={<SignUp/>}/>
