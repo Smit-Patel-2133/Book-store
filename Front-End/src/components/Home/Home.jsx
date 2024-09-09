@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
+import Slider from '../slider/Slider.jsx';
 
 const products = [
   {
@@ -45,16 +46,15 @@ const Home = () => {
   return (
     <>
     <NavigationBar/>
-    <div className='Image'>
-        <img src="" alt="" />
-    </div>
+    <Slider/>
     <section className="products-section">
-      <h2 className="section-title">
+      <div className="slogan-1"><h2 className="section-title">
         NEW <span>PRODUCTS</span>
       </h2>
       <p className="section-description">
         There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.
       </p>
+      </div>
       <div className="products-grid">
         {products.map((product) => (
           <div key={product.id} className="product-card">
