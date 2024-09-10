@@ -1,142 +1,138 @@
-/* .navbar {
-    display: flex; */
-    /*justify-content: ;*/
-    /* align-items: center;
-    background-color: #f0f0f0;
-    padding: 0.5rem 1rem;
-} */
-/* 
-.navbar-logo a {
-    color: #000;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.navbar-links {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar-links li {
-    margin-left: 1.5rem;
-}
-
-.navbar-links a {
-    color: #000;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.navbar-links a.active {
-
-    font-weight: bold;
-}
-
-.navbar-links a:hover {
-    color: #ce7852;
-    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0),
-    2px 2px 5px rgba(0, 0, 0, 0.5),
-    4px 4px 10px rgba(0, 0, 0, 0.4);
-    transform: translateY(-2px);
-} */
-
-
 /* Basic Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Logo */
-  .logo img {
-    width: 120px;
-    height: auto;
-  }
-  
-  /* Navigation Links */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Logo */
+.logo img {
+  width: 120px;
+  height: auto;
+}
+
+/* Navigation Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.nav-links li a:hover {
+  color: #ea6a47;
+  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0),
+  2px 2px 5px rgba(0, 0, 0, 0.5),
+  4px 4px 10px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Icons on the Right */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-icons i {
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-icons i:hover {
+  color: #ea6a47;
+  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0),
+  2px 2px 5px rgba(0, 0, 0, 0.5),
+  4px 4px 10px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Cart Count */
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background-color: #ea6a47;
+  color: white;
+  padding: 3px 6px;
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+/* Profile Picture */
+.profile-pic {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+}
+
+/* Hamburger Icon for Mobile */
+.hamburger-icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* Active Menu for Mobile */
+.nav-links.active {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  padding: 20px 0;
+}
+
+.nav-links.active li {
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 50px;
+    display: none;
   }
-  
-  .nav-links li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: 500;
+
+  .hamburger-icon {
+    display: block;
   }
-  
-  .nav-links li a:hover {
-    color: #ea6a47;
-  }
-  
-  /* Icons on the Right */
-  .nav-icons {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-  
+
   .nav-icons i {
-    font-size: 18px;
-    color: #333;
-    cursor: pointer;
-    position: relative;
+    font-size: 16px;
   }
-  
-  .cart-count {
-    position: absolute;
-    top: -8px;
-    right: -12px;
-    background-color: #ea6a47;
-    color: white;
-    padding: 3px 6px;
-    border-radius: 50%;
-    font-size: 12px;
+}
+
+@media (max-width: 1200px) {
+  .navbar {
+    padding: 10px 30px;
   }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .navbar {
-      padding: 10px 20px;
-    }
-  
-    .nav-links {
-      display: none; /* Hide links on smaller screens */
-    }
-  
-    .nav-icons i {
-      font-size: 16px;
-    }
+
+  .nav-links li a {
+    font-size: 14px;
   }
-  
-  @media (max-width: 1200px) {
-    .navbar {
-      padding: 10px 30px;
-    }
-  
-    .nav-links li a {
-      font-size: 14px;
-    }
-  }
-  
+}

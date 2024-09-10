@@ -1,6 +1,6 @@
 .slider-container {
     position: relative;
-    width: 100vw; /* Full viewport width */
+    width: 99vw; /* Full viewport width */
     height: calc(80vh - 80px); /* Adjust height based on available space */
     margin: 0;
     overflow: hidden;

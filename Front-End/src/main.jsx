@@ -8,6 +8,7 @@ import Login from "./components/Login/Login.jsx";
 import LandingPage from "./components/Landing/LandingPage.jsx";
 import SignUp from "./components/SignUp/SignUp.jsx";
 import HomePage from "./components/Home/Home.jsx";
+import Books from "./components/Books/Books.jsx";
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='' element={<App />}>
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
             <Route path='/home_page' element={<HomePage/>} />
             <Route path='/login' element={<Login />} />
             <Route path='/SignUp' element={<SignUp/>}/>
+            <Route path='/Books' element={<Books/>}/>
         </Route>
     )
 );
