@@ -10,7 +10,6 @@ body {
     padding: 40px;
     max-width: 1200px;
     margin: auto;
-
 }
 
 /* Header Group */
@@ -30,7 +29,6 @@ body {
     color: #333;
     background-color: #fff;
     width: 200px;
-
 }
 
 .browse-categories .category-dropdown:hover {
@@ -80,9 +78,9 @@ body {
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    background-color: #f5f5f5;
+    background-color: transparent; /* Removed the background */
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: none; /* Removed the border */
 }
 
 .cart-info i {
@@ -104,6 +102,79 @@ body {
     color: #ea6a47;
 }
 
+/* Books Container */
+.books-container {
+    display: flex;
+    justify-content: space-between; /* Evenly distribute the space between books */
+    flex-wrap: wrap;
+    margin-top: 100px;
+    gap: 20px; /* Space between books */
+    padding: 20px;
+    border-top: 1px solid #ddd; /* Line between the books */
+}
+
+/* Book Card */
+/* Book Card */
+.book-card {
+    width: 30%; /* 3 books per row */
+    text-align: center;
+    background-color: transparent; /* Removed the background */
+    padding: 20px;
+    border: none; /* Removed the border */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items */
+    gap: 10px; /* Space between items */
+}
+
+.book-image {
+    width: 80%;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px;
+}
+
+.book-author, .book-title {
+    margin: 0;
+}
+
+.book-author {
+    font-size: 18px;
+    color: #888;
+}
+
+.book-title {
+    font-size: 22px;
+    color: #333;
+}
+
+.book-price-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.book-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #51A351;
+}
+
+.book-original-price {
+    font-size: 18px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.book-discount {
+    background-color: #d9534f;
+    color: white;
+    font-size: 14px;
+    padding: 4px 6px;
+    border-radius: 5px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-group {
@@ -117,6 +188,11 @@ body {
 
     .cart-info {
         width: 100%;
-            justify-content: space-between;
+        justify-content: space-between;
+    }
+
+    /* Adjust book cards for smaller screens */
+    .book-card {
+        width: 100%; /* Full width on mobile */
     }
 }
