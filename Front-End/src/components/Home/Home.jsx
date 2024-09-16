@@ -46,13 +46,14 @@ const Home = () => {
   return (
     <>
     <NavigationBar/>
+      <div className="main-container">
     <Slider/>
     <section className="products-section">
       <div className="slogan-1"><h2 className="section-title">
         NEW <span>PRODUCTS</span>
       </h2>
       <p className="section-description">
-        There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.
+        Discover the best books and latest products right here. From top reads to the newest gadgets, find quality options and fresh arrivals all in one place. Explore now and find your next favorite!
       </p>
       </div>
       <div className="products-grid">
@@ -74,6 +75,7 @@ const Home = () => {
         ))}
       </div>
     </section>
+      </div>
     </>
   );
 };

@@ -1,6 +1,4 @@
-/* Home.css */
-
-/* Reset global styles if not already set */
+/* Reset global styles */
 *,
 *::before,
 *::after {
@@ -13,10 +11,17 @@ body, html, #root {
   width: 100%;
 }
 
+.main-container {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px; /* Restricting the max-width for better centering */
+  box-sizing: border-box;
+}
+
 /* Image Section */
 .Image {
   height: 70vh;
-  width: 100%; /* Ensure full width */
+  width: 100%;
 }
 
 .Image img {
@@ -26,11 +31,12 @@ body, html, #root {
 }
 
 /* Section Title */
-.slogan-1{
-  margin: 100px;
-}
-.section-title {
+.slogan-1 {
+  margin: 50px 0; /* Reducing margin for better fit on smaller screens */
   text-align: center;
+}
+
+.section-title {
   font-size: 28px;
   margin-bottom: 10px;
 }
@@ -49,9 +55,9 @@ body, html, #root {
 /* Product Grid */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjusted for better fit */
   gap: 20px;
-  padding: 0 50px;
+  padding: 0 20px;
 }
 
 /* Product Card */
@@ -135,9 +141,16 @@ body, html, #root {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .main-container {
+    padding: 10px; /* Reduced padding on smaller screens */
+  }
+
+  .slogan-1 {
+    margin: 30px 0; /* Reduce the top margin */
+  }
+
   .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    padding: 0 20px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Adjust grid for tablet-sized screens */
   }
 
   .product-card {
@@ -155,7 +168,7 @@ body, html, #root {
 
 @media (max-width: 576px) {
   .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* More compact grid for smaller screens */
   }
 
   .product-card {
@@ -163,6 +176,10 @@ body, html, #root {
   }
 
   .product-prices {
-    flex-direction: column;
+    flex-direction: column; /* Stack prices on small screens */
+  }
+
+  .product-icons i {
+    font-size: 16px; /* Reduce icon size */
   }
 }

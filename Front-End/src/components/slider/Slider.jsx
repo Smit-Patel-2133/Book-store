@@ -1,23 +1,48 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Slider.css'; // For custom styles
+import slider2 from '../../assets/images/slider/slider1.png';
+import slider1 from '../../assets/images/slider/slider2.png';
 
 const sliderData = [
   {
-    image: 'https://via.placeholder.com/800x400/FF5733/FFFFFF?text=Slide+1',
-    slogan: 'Slogan for Slide 1',
+    name:"Stories",
+    image: slider1,
+    slogan: 'Ready Like an Ideas',
+    title: 'Buy Best Book Online Hear',
   },
   {
-    image: 'https://via.placeholder.com/800x400/33FF57/FFFFFF?text=Slide+2',
-    slogan: 'Slogan for Slide 2',
+    image: slider2,
+    slogan: 'Expand Your Knowledge',
+    title: 'Best Online book Store',
   },
   {
-    image: 'https://via.placeholder.com/800x400/3357FF/FFFFFF?text=Slide+3',
-    slogan: 'Slogan for Slide 3',
+    name:"Stories",
+    image: slider1,
+    slogan: 'Ready Like an Ideas',
+    title: 'Buy Best Book Online Hear',
   },
+  {
+    image: slider2,
+    slogan: 'Expand Your Knowledge',
+    title: 'Best Online book Store',
+  },
+  {
+    name:"Stories",
+    image: slider1,
+    slogan: 'Ready Like an Ideas',
+    title: 'Buy Best Book Online Hear',
+  },
+  {
+    image: slider2,
+    slogan: 'Expand Your Knowledge',
+    title: 'Best Online book Store',
+  }
 ];
 
 const Slider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate(); // Initialize navigate
 
   // Automatically move to the next slide every 7 seconds
   useEffect(() => {
@@ -29,17 +54,39 @@ const Slider = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleShopNowClick = () => {
+    navigate('/books'); // Navigate to the book page
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
   return (
-    <div className="slider-container">
-      <div className="slider-content" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-        {sliderData.map((slide, index) => (
-          <div className="slide" key={index}>
-            <img src={slide.image} alt={`Slide ${index + 1}`} />
-            <div className="slogan">{slide.slogan}</div>
-          </div>
-        ))}
+      <div className="slider-container">
+        <div className="slider-content" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+          {sliderData.map((slide, index) => (
+              <div className="slide" key={index}>
+                <img src={slide.image} alt={`Slide ${index + 1}`} />
+                <div className="slide-text">
+                  <div className="slogan">{slide.slogan}</div>
+                  <div className="slide-title">{slide.title}</div>
+                  <button className="shop-now-btn" onClick={handleShopNowClick}>Shop Now</button>
+                </div>
+              </div>
+          ))}
+        </div>
+        {/* Dots indicator */}
+        <div className="dots-container">
+          {sliderData.map((_, index) => (
+              <span
+                  key={index}
+                  className={`dot ${currentIndex === index ? 'active' : ''}`}
+                  onClick={() => goToSlide(index)}
+              />
+          ))}
+        </div>
       </div>
-    </div>
   );
 };
 

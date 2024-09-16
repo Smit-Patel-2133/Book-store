@@ -80,11 +80,11 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Login endpoint
+
 // Login endpoint
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    console.log('Login attempt:', email, password);
+    console.log('Login attempt:', email);
 
     try {
         const collection = await connectToDatabase();
@@ -93,9 +93,9 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.status(400).json({ error: 'User does not exist' });
         }
-        console.log(user.password===password)
+
         // Compare password with hashed password in the database
-        const isPasswordValid = await password===user.password;
+        const isPasswordValid = await bcrypt.compare(password, user.password);
 
         console.log('Password valid:', isPasswordValid);
 
@@ -107,6 +107,33 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error('Failed to login user:', error);
         res.status(500).json({ error: 'Failed to login user' });
+    }
+});
+
+let db=null
+async function connectToDatabase2() {
+    if (db) {
+        return db.collection('books_info');
+    }
+    try {
+        await client.connect();
+        console.log("Connected successfully to MongoDB!");
+        db = client.db('userDatabase');
+        return db.collection('books_info');
+    } catch (err) {
+        console.error("Failed to connect to MongoDB:", err);
+        throw err;
+    }
+}
+app.get('/books', async (req, res) => {
+    try {
+        const collection = await connectToDatabase2();
+        const books = await collection.find({}).limit(2000).toArray(); // Limit the result to 500
+
+        res.status(200).json(books);
+    } catch (error) {
+        console.error('Failed to fetch books:', error);
+        res.status(500).json({ error: 'Failed to fetch books' });
     }
 });
 

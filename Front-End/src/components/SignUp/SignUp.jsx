@@ -22,7 +22,7 @@ const Signup = () => {
             if (response.status === 201) {
                 console.log('User registered successfully');
             }
-            navigate('/information_Page');
+            navigate('/home_page');
         } catch (error) {
             console.error('Error registering user:', error);
             alert('Failed to register user');

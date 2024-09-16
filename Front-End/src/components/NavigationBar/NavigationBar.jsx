@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { NavLink } from "react-router-dom";
 import pi from "../../assets/images/login/loginpage.png";
 import {useNavigate} from "react-router-dom";
+import logo from "../../assets/images/logo/img.png"
 const NavigationBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const nevigate=useNavigate();
@@ -16,7 +17,7 @@ const NavigationBar = () => {
     return (
         <nav className="navbar">
             <div className="logo">
-                <img src="/path-to-logo.png" alt="Book Store" />
+                <img src={logo} alt="Book Store" />
             </div>
 
             {/* Hamburger Menu Icon */}

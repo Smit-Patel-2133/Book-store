@@ -1,37 +1,118 @@
 .slider-container {
-    position: relative;
-    width: 99vw; /* Full viewport width */
-    height: calc(80vh - 80px); /* Adjust height based on available space */
-    margin: 0;
-    overflow: hidden;
+  position: relative;
+  width: 100%; /* Full-width container */
+  height: calc(80vh - 80px); /* Adjust height based on available space */
+  margin: 0 auto; /* Center the slider horizontally */
+  overflow: hidden;
+  background-color: #e2f0e2; /* Add the background color to the container */
+}
+
+.slider-content {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%; /* Full width */
+}
+
+.slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center; /* Vertically center content */
+  justify-content: flex-end; /* Push the image to the right */
+}
+
+.slide img {
+  width: 50%; /* Restrict the image to take up half the slide width */
+  height: auto;
+  object-fit: contain; /* Keep the aspect ratio intact */
+  display: block;
+}
+
+.slide-text {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  color: black; /* Adjust text color to contrast with background */
+  font-size: 24px;
+  z-index: 10; /* Ensure the text is above the image */
+  width: 40%; /* Restrict text to the left half of the screen */
+  margin-top: 70px;
+}
+
+.slogan {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #68ae0b;
+}
+
+.slide-title {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.shop-now-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.shop-now-btn:hover {
+  background-color: #45a049;
+}
+
+/* Dots Indicator Style */
+.dots-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #4CAF50;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .slide-text {
+    font-size: 18px;
+    top: 30%; /* Adjusted for smaller screens */
   }
-  
-  .slider-content {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-  .slide {
-    min-width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire slide */
-  }
-  
+
   .slogan {
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
     font-size: 24px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 20px;
-    border-radius: 5px;
   }
-  
+
+  .slide-title {
+    font-size: 18px;
+  }
+
+  .shop-now-btn {
+    font-size: 14px;
+  }
+
+  .slide img {
+    width: 100%; /* Make image take full width on smaller screens */
+    height: auto;
+    object-fit: cover;
+  }
+}
