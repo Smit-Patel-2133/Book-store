@@ -128,7 +128,8 @@ async function connectToDatabase2() {
 app.get('/books', async (req, res) => {
     try {
         const collection = await connectToDatabase2();
-        const books = await collection.find({}).limit(2000).toArray(); // Limit the result to 500
+        // Sort by published_year in descending order (-1 for descending)
+        const books = await collection.find({}).sort({ ratings_count: -1 }).limit(2000).toArray();
 
         res.status(200).json(books);
     } catch (error) {
@@ -136,6 +137,7 @@ app.get('/books', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch books' });
     }
 });
+
 
 
 // Start the server

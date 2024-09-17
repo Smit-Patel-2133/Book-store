@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
 }
 
 body {
@@ -41,9 +42,7 @@ body {
 
 .nav-links li a:hover {
   color: #68ae0b;
-  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0),
-  2px 2px 5px rgba(0, 0, 0, 0.5),
-  4px 4px 10px rgba(0, 0, 0, 0.4);
+
   transform: translateY(-2px);
 }
 
@@ -64,9 +63,7 @@ body {
 
 .nav-icons i:hover {
   color: #68ae0b;
-  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0),
-  2px 2px 5px rgba(0, 0, 0, 0.5),
-  4px 4px 10px rgba(0, 0, 0, 0.4);
+
   transform: translateY(-2px);
 }
 
