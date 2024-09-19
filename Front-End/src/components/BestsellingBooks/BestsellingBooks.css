@@ -1,150 +1,5 @@
-/* .bestselling-books {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-  }
-  
-  .header h2 {
-    font-size: 28px;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .view-all {
-    font-size: 16px;
-    color: #ea6a47;
-    text-decoration: none;
-  }
-  
-  .view-all:hover {
-    text-decoration: underline;
-  }
-  
-  .books-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-    gap: 20px;
-  }
-  
-  .book-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-    position: relative;
-    box-sizing: border-box;
-  }
-  
-  .book-card:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .book-image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    object-fit: cover;
-  }
-  
-  .book-info {
-    text-align: center;
-  }
-  
-  .book-type {
-    font-size: 12px;
-    color: #ea6a47;
-    margin-bottom: 5px;
-  }
-  
-  .book-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
-  .book-author {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 10px;
-  }
-  
-  .book-price {
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .old-price {
-    text-decoration: line-through;
-    color: #999;
-    font-size: 14px;
-    margin-left: 5px;
-  }
-  
-  
-  @media (max-width: 768px) {
-    .books-container {
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
-    }
-  
-    .book-card {
-      padding: 10px;
-    }
-  
-    .header h2 {
-      font-size: 22px; 
-    }
-  
-    .view-all {
-      font-size: 14px;
-    }
-  
-    .book-title {
-      font-size: 16px;
-    }
-  
-    .book-price {
-      font-size: 14px;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .books-container {
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
-    }
-  
-    .book-card {
-      padding: 8px;
-    }
-  
-    .book-title {
-      font-size: 14px;
-    }
-  
-    .book-price {
-      font-size: 13px;
-    }
-  
-    .header h2 {
-      font-size: 18px;
-    }
-  }
-   */
-
-
-   Reset global styles
+/* 
+Reset global styles
 *,
 *::before,
 *::after {
@@ -329,4 +184,141 @@ body, html, #root {
     font-size: 16px; 
   }
 }
+ */
 
+
+ /* General styling */
+.main-container {
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+.products-section {
+  margin-top: 50px;
+}
+
+.section-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.section-title span {
+  color: #ea6a47;
+}
+
+/* Slick slider arrows */
+.slick-prev:before, .slick-next:before {
+  content: '';
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #999;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #ea6a47;
+}
+
+/* Product card styling */
+.product-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+}
+
+.product-tag {
+  background-color: #ea6a47;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 3px 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 3px;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.product-label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.product-prices {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.current-price {
+  color: #ea6a47;
+  font-weight: bold;
+}
+
+.discount-price {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.product-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 18px;
+}
+
+.product-icons i {
+  cursor: pointer;
+  color: #666;
+}
+
+.product-icons i:hover {
+  color: #ea6a47;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 22px;
+  }
+
+  .product-card {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card {
+    padding: 8px;
+  }
+  
+  .slick-prev {
+    left: -30px;
+  }
+
+  .slick-next {
+    right: -30px;
+  }
+}
