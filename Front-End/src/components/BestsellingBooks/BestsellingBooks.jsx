@@ -5,47 +5,6 @@ import m1 from '../../assets/images/book demo/b2.jpg';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-// Product Data
-const products = [
-  {
-    id: 1,
-    tag: 'BEST SELLER',
-    image: m1,
-    title: 'Blue in the Water',
-    price: 35.0,
-    discountPrice: 350.0,
-    label: 'The Remaining'
-  },
-  {
-    id: 2,
-    tag: 'HOT',
-    image: m1,
-    title: 'Animals Life',
-    price: 40.0,
-    discountPrice: 570.0,
-    label: 'Bowen Greenwood'
-  },
-  {
-    id: 3,
-    tag: 'BEST SELLER',
-    image: m1,
-    title: 'War of Dragon',
-    price: 35.0,
-    discountPrice: 231.0,
-    label: 'Moren Nicol'
-  },
-  {
-    id: 4,
-    tag: 'HOT',
-    image: m1,
-    title: 'Lando',
-    price: 35.0,
-    discountPrice: 502.0,
-    label: 'Madhu Sashon'
-  },
-  // Add more books...
-];
-
 // Custom Previous Arrow
 const PrevArrow = ({ className, style, onClick }) => (
   <div
@@ -104,7 +63,9 @@ const sliderSettings = {
   ]
 };
 
-const BestsellingBooks = () => {
+const BestsellingBooks = (props) => {
+  let products = props.product
+  
   return (
     <div className="main-container">
       <section className="products-section">
