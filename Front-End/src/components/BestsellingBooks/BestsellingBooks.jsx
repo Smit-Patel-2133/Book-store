@@ -1,18 +1,12 @@
 import React from 'react';
-import './Home.css';
-import NavigationBar from "../NavigationBar/NavigationBar.jsx";
-import Slider from '../slider/Slider.jsx';
-import BestsellingBooks from '../BestsellingBooks/BestsellingBooks.jsx';
+import './BestsellingBooks.css';
 import m1 from '../../assets/images/book demo/b2.jpg'
-import im2 from '../../assets/images/book demo/b1.jpeg'
-import m3 from '../../assets/images/book demo/b3.jpeg'
-
 
 const products = [
   {
     id: 1,
     tag: 'BEST SELLER',
-    image: m1, // replace with actual image paths
+    image: m1, 
     title: 'Blue in the Water',
     price: 35.00,
     discountPrice: 350.00,
@@ -21,7 +15,7 @@ const products = [
   {
     id: 2,
     tag: 'HOT',
-    image: im2,
+    image: m1,
     title: 'Animals Life',
     price: 40.00,
     discountPrice: 570.00,
@@ -30,7 +24,7 @@ const products = [
   {
     id: 3,
     tag: 'BEST SELLER',
-    image: m3, // replace with actual image paths
+    image: m1, 
     title: 'War of Dragon',
     price: 35.00,
     discountPrice:231.00,
@@ -39,7 +33,7 @@ const products = [
   {
     id: 4,
     tag: 'HOT',
-    image: 'https://th.bing.com/th?id=OIP.EU44-fo8CATAW-Y4z2l7NgHaJb&w=221&h=282&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2', // replace with actual image paths
+    image: m1, 
     title: 'Lando',
     price: 35.00,
     discountPrice: 502.00,
@@ -48,7 +42,7 @@ const products = [
   {
     id: 5,
     tag: 'HOT',
-    image: 'https://th.bing.com/th?id=OIP.EU44-fo8CATAW-Y4z2l7NgHaJb&w=221&h=282&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2', // replace with actual image paths
+    image: m1,
     title: 'Lando',
     price: 35.00,
     discountPrice: 502.00,
@@ -57,7 +51,7 @@ const products = [
   {
     id: 6,
     tag: 'HOT',
-    image: 'https://th.bing.com/th?id=OIP.EU44-fo8CATAW-Y4z2l7NgHaJb&w=221&h=282&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2', // replace with actual image paths
+    image: m1, 
     title: 'Lando',
     price: 35.00,
     discountPrice: 502.00,
@@ -66,7 +60,7 @@ const products = [
   {
     id: 7,
     tag: 'HOT',
-    image: 'https://th.bing.com/th?id=OIP.EU44-fo8CATAW-Y4z2l7NgHaJb&w=221&h=282&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2', // replace with actual image paths
+    image: m1, // replace with actual image paths
     title: 'Lando',
     price: 35.00,
     discountPrice: 502.00,
@@ -75,30 +69,21 @@ const products = [
   {
     id: 8,
     tag: 'HOT',
-    image: 'https://th.bing.com/th?id=OIP.EU44-fo8CATAW-Y4z2l7NgHaJb&w=221&h=282&c=8&rs=1&qlt=90&o=6&dpr=1.1&pid=3.1&rm=2', // replace with actual image paths
+    image: m1, // replace with actual image paths
     title: 'Lando',
     price: 35.00,
     discountPrice: 502.00,
     label: 'Madhu Sashon'
   }
 ];
-
-const Home = () => {
+const BestsellingBooks = () => {
   return (
     <>
-    <NavigationBar/>
-      
-    <Slider/>
-    
     <div className="main-container">
-    <BestsellingBooks/>
     <section className="products-section">
       <div className="slogan-1"><h2 className="section-title">
-        NEW <span>PRODUCTS</span>
+        BEST <span> SELLER </span>
       </h2>
-      <p className="section-description">
-        Discover the best books and latest products right here. From top reads to the newest gadgets, find quality options and fresh arrivals all in one place. Explore now and find your next favorite!
-      </p>
       </div>
       <div className="products-grid">
         {products.map((product) => (
@@ -124,7 +109,4 @@ const Home = () => {
   );
 };
 
-export default Home;
-
-
-
+export default BestsellingBooks;
