@@ -5,6 +5,7 @@ import m1 from '../../assets/images/book demo/b2.jpg';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+
 // Custom Previous Arrow
 const PrevArrow = ({ className, style, onClick }) => (
   <div
@@ -63,15 +64,18 @@ const sliderSettings = {
   ]
 };
 
-const BestsellingBooks = (props) => {
-  let products = props.product
-  
+
+
+
+const BestsellingBooks = ({products,name}) => {
+  console.log("aksdbfasdb:-",products);
+
   return (
     <div className="main-container">
       <section className="products-section">
         <div className="slogan-1">
           <h2 className="section-title">
-            BEST <span> SELLER </span>
+            {name}
           </h2>
         </div>
 

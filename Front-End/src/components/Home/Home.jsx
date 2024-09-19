@@ -1,3 +1,4 @@
+
 import React from 'react';
 import './Home.css';
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
@@ -85,8 +86,80 @@ const products = [
     label: 'Madhu Sashon'
   }
 ];
-
-
+const products2 = [
+  {
+    id: 1,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 2,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 3,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 4,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 5,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 6,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 7,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  },
+  {
+    id: 8,
+    tag: 'HOT',
+    image: m3,
+    title: 'Lando',
+    price: 35.00,
+    discountPrice: 502.00,
+    label: 'Madhu Sashon'
+  }
+];
 
 // Custom Previous Arrow
 const PrevArrow = ({ className, style, onClick }) => (
@@ -153,6 +226,7 @@ const Home = () => {
       <Slider />
       <div className="main-container">
         {/* Bestselling Books Slider */}
+
         <BestsellingBooks product = {products}/>
         
 
@@ -187,6 +261,10 @@ const Home = () => {
             ))}
           </ReactSlick>
         </section>
+
+        <BestsellingBooks products={products} name="new"/>
+        <BestsellingBooks products={products2} name="bestsell"/>
+
       </div>
     </>
   );
