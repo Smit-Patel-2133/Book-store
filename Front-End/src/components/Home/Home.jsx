@@ -228,42 +228,8 @@ const Home = () => {
         {/* Bestselling Books Slider */}
 
         <BestsellingBooks product = {products}/>
-        
-
-        {/* New Products Slider */}
-        <section className="products-section">
-          <div className="slogan-1">
-            <h2 className="section-title">
-              NEW <span>PRODUCTS</span>
-            </h2>
-            <p className="section-description">
-              Discover the best books and latest products right here. From top reads to the newest gadgets, find quality options and fresh arrivals all in one place. Explore now and find your next favorite!
-            </p>
-          </div>
-
-          {/* Slider for New Products */}
-          <ReactSlick {...sliderSettings}>
-            {products.map((product) => (
-              <div key={product.id} className="product-card">
-                <div className="product-tag">{product.tag}</div>
-                <img src={product.image} alt={product.title} className="product-image" />
-                <h3 className="product-label">{product.label}</h3>
-                <div className="product-prices">
-                  <span className="current-price">Rs. {product.price.toFixed(2)}</span>
-                  <span className="discount-price">${product.discountPrice.toFixed(2)}</span>
-                </div>
-                <div className="product-icons">
-                  <i className="fas fa-shopping-bag"></i>
-                  <i className="fas fa-search"></i>
-                  <i className="fas fa-heart"></i>
-                </div>
-              </div>
-            ))}
-          </ReactSlick>
-        </section>
-
-        <BestsellingBooks products={products} name="new"/>
-        <BestsellingBooks products={products2} name="bestsell"/>
+        <BestsellingBooks products={products} name="New Arival"/>
+        <BestsellingBooks products={products2} name="Bestseller"/>
 
       </div>
     </>
