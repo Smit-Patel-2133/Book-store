@@ -1,7 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
 import './BestsellingBooks.css';
-import m1 from '../../assets/images/book demo/b2.jpg';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
