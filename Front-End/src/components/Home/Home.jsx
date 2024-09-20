@@ -1,5 +1,3 @@
-
-import React from 'react';
 import './Home.css';
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
 import Slider from '../slider/Slider.jsx';
@@ -87,6 +85,7 @@ const products = [
   }
 ];
 const products2 = [
+
   {
     id: 1,
     tag: 'HOT',
@@ -160,7 +159,6 @@ const products2 = [
     label: 'Madhu Sashon'
   }
 ];
-
 // Custom Previous Arrow
 const PrevArrow = ({ className, style, onClick }) => (
   <div
@@ -226,11 +224,8 @@ const Home = () => {
       <Slider />
       <div className="main-container">
         {/* Bestselling Books Slider */}
-
-        <BestsellingBooks product = {products}/>
-        <BestsellingBooks products={products} name="New Arival"/>
-        <BestsellingBooks products={products2} name="Bestseller"/>
-
+        <BestsellingBooks products={products} name="new"/>
+        <BestsellingBooks products={products2} name="bestsell"/>
       </div>
     </>
   );
