@@ -110,6 +110,25 @@ body {
   margin-bottom: 10px;
 }
 
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.auth-buttons a {
+  text-decoration: none;
+  color: #050505;
+  padding: 0.5rem 1rem;
+  border: 1px solid #070707;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons a:hover {
+  background-color: #68ae0b;
+  border-color: #68ae0b;
+  color: #fff;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
   .nav-links {

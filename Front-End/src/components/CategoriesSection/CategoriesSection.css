@@ -1,0 +1,130 @@
+/* Categories Component Styling */
+.categories {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  
+  .categories h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  /* Category Slider - Flex Layout */
+  .category-slider {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .category-card {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 200px; /* Fixed card width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .category-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .category-title {
+    font-size: 1.2rem;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .category-title:hover {
+    color: #28a745; /* Green hover effect */
+  }
+  
+  /* Responsive Design */
+  
+  /* Large Screens (Desktops) */
+  @media (min-width: 1024px) {
+    .categories {
+      padding: 3rem 5rem;
+    }
+  
+    .categories h2 {
+      font-size: 3rem;
+    }
+  
+    .category-card {
+      width: 220px; /* Slightly larger card width for larger screens */
+    }
+  }
+  
+  /* Tablets and Medium Devices */
+  @media (max-width: 1024px) {
+    .category-card {
+      width: 180px;
+    }
+  
+    .categories h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  /* Mobile Devices */
+  @media (max-width: 768px) {
+    .category-slider {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .category-card {
+      width: 100%;
+      max-width: 300px; /* Allow cards to scale to smaller screens */
+    }
+  
+    .categories h2 {
+      font-size: 1.8rem;
+    }
+  
+    .category-card img {
+      height: 140px;
+    }
+  }
+  
+  /* Extra Small Devices (Phones) */
+  @media (max-width: 480px) {
+    .categories {
+      padding: 1.5rem;
+    }
+  
+    .categories h2 {
+      font-size: 1.6rem;
+    }
+  
+    .category-card {
+      width: 90%;
+      max-width: 280px;
+    }
+  
+    .category-card img {
+      height: 130px;
+    }
+  
+    .category-title {
+      font-size: 1rem;
+    }
+  }
+  

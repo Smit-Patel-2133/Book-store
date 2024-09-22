@@ -37,8 +37,8 @@ const NavigationBar = () => {
                     <img src={pi} className="profile-pic" alt="Profile" />
                 ) : (
                     <div className="auth-buttons">
-                        <NavLink to="/login" className="login-btn">Login/</NavLink>
-                        <NavLink to="/signup" className="signup-btn">Sign Up</NavLink>
+                        <NavLink to="/login">Login</NavLink>
+                        <NavLink to="/signup">Sign Up</NavLink>
                     </div>
                 )}
             </div>
