@@ -127,9 +127,26 @@ async function connectToDatabase2() {
 }
 app.get('/books', async (req, res) => {
     try {
+        const { category, search } = req.query;
         const collection = await connectToDatabase2();
-        // Sort by published_year in descending order (-1 for descending)
-        const books = await collection.find({}).sort({ ratings_count: -1 }).limit(2000).toArray();
+        let query = {};
+
+        if (category) {
+            query.categories = category;  // Correct field name is 'categories'
+        }
+
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { authors: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        const books = await collection
+            .find(query)
+            .sort({ ratings_count: -1 })
+            .limit(2000)
+            .toArray();
 
         res.status(200).json(books);
     } catch (error) {
@@ -137,7 +154,29 @@ app.get('/books', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch books' });
     }
 });
+app.post('/recommend', async (req, res) => {
+    const { bookTitle } = req.body;
 
+    // Fetch book data from MongoDB
+    const bookData = await Book.find({ title: new RegExp(bookTitle, 'i') });
+
+    if (bookData.length === 0) {
+        return res.status(404).send('Book not found');
+    }
+
+    // Call Python script to get recommendations
+    const pythonProcess = spawn('python', ['path/to/your/script.py', bookTitle]);
+
+    pythonProcess.stdout.on('data', (data) => {
+        const recommendations = JSON.parse(data);
+        res.json(recommendations);
+    });
+
+    pythonProcess.stderr.on('data', (error) => {
+        console.error(`Error: ${error}`);
+        res.status(500).send('Error while getting recommendations');
+    });
+});
 
 
 // Start the server

@@ -1,40 +1,70 @@
-import { useState, useEffect } from 'react';
-import NavigationBar from "../NavigationBar/NavigationBar.jsx";
-import "./Books.css";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import './Books.css';
+import NavigationBar from "../NavigationBar/NavigationBar.jsx";
 
 const Books = () => {
     const [booksData, setBooksData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [categories, setCategories] = useState(['Fiction', 'Non-fiction', 'Science', 'Biography']);
-    const [selectedCategory, setSelectedCategory] = useState(''); // State for selected category
-    const [isLoggedIn, setIsLoggedIn] = useState(true); // Assuming user login status for shopping cart
+    const [categories, setCategories] = useState([
+        'Fiction', 'Arts and Entertainment', 'Science and Technology', 'Non-Fiction',
+        'Business and Economics', 'Juvenile Fiction', 'Literary Collections',
+        'Biography & Autobiography', 'Philosophy and Religion',
+        'Juvenile Nonfiction', 'Poetry', 'Miscellaneous', 'Religion',
+        'Social Science', 'Comics & Graphic Novels', 'Drama'
+    ]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const booksPerPage = 12;
 
     useEffect(() => {
-        const fetchBooks = async () => {
-            try {
-                const response = await axios.get('http://localhost:3000/books');
-                setBooksData(response.data);
-                console.log(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Failed to fetch books:', error);
-            }
-        };
-
         fetchBooks();
-    }, []);
+    }, [selectedCategory, searchTerm]);  // Refetch when category or search term changes
+
+    const fetchBooks = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get('http://localhost:3000/books', {
+                params: {
+                    category: selectedCategory || undefined,  // Send category if selected
+                    search: searchTerm || undefined            // Send search if there’s a search term
+                }
+            });
+            setBooksData(response.data);
+        } catch (error) {
+            console.error('Failed to fetch books:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+        setCurrentPage(1); // Reset to first page when search term changes
+    };
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+        setCurrentPage(1); // Reset to first page when category changes
+    };
+
+    const handleSearch = () => {
+        fetchBooks(); // Fetch books when search button is clicked
+    };
 
     if (loading) {
         return <div>Loading books...</div>;
     }
 
-    // Filter books based on selected category
-    const filteredBooks = selectedCategory
-        ? booksData.filter((book) => book.category === selectedCategory)
-        : booksData;
+    const filteredBooks = booksData.filter((book) =>
+        (selectedCategory ? book.categories.includes(selectedCategory) : true) && // Updated to handle 'categories' array
+        (searchTerm ?
+            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            book.authors.toLowerCase().includes(searchTerm.toLowerCase())
+            : true)
+    );
 
     const indexOfLastBook = currentPage * booksPerPage;
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
@@ -67,18 +97,11 @@ const Books = () => {
         return buttons;
     };
 
-    // Handle category change
-    const handleCategoryChange = (event) => {
-        setSelectedCategory(event.target.value);
-        setCurrentPage(1); // Reset to first page when category changes
-    };
-
     return (
         <>
             <NavigationBar />
             <div className="main-container">
                 <div className="header-group">
-                    {/* Browse Categories Dropdown */}
                     <div className="browse-categories">
                         <select className="category-dropdown" onChange={handleCategoryChange} value={selectedCategory}>
                             <option value="">Browse Categories</option>
@@ -88,15 +111,19 @@ const Books = () => {
                         </select>
                     </div>
 
-                    {/* Search Bar */}
                     <div className="search">
-                        <input type="text" className="search-input" placeholder="Search for books..." />
-                        <button className="search-button">
+                        <input
+                            type="text"
+                            className="search-input"
+                            placeholder="Search for books..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                        <button className="search-button" onClick={handleSearch}>
                             <i className="fas fa-search"></i> Search
                         </button>
                     </div>
 
-                    {/* Shopping Cart */}
                     <div className="cart">
                         <button className="cart-info">
                             <i className="fas fa-shopping-cart"></i>
@@ -122,7 +149,6 @@ const Books = () => {
                     ))}
                 </div>
 
-                {/* Pagination Controls */}
                 <div className="pagination">
                     {renderPaginationButtons()}
                 </div>

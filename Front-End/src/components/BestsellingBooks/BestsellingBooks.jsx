@@ -1,4 +1,3 @@
-import React from 'react';
 import Slider from 'react-slick';
 import './BestsellingBooks.css';
 import m1 from '../../assets/images/book demo/b2.jpg';
@@ -65,7 +64,6 @@ const sliderSettings = {
 };
 
 const BestsellingBooks = ({products,name}) => {
-  console.log("aksdbfasdb:-",products);
   return (
     <div className="main-container">
       <section className="products-section">
