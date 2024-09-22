@@ -1,0 +1,152 @@
+/* PopularBooks Component Styling */
+.popular-books {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .popular-books h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  /* Book Slider - Flexbox Layout */
+  .book-slider {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .book-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1rem;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .book-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+  
+  .book-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .book-card a {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #28a745; /* Green background */
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-card a:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  /* Responsive Design */
+  
+  /* Large Screens (Desktops) */
+  @media (min-width: 1024px) {
+    .popular-books h2 {
+      font-size: 3rem;
+    }
+  
+    .book-card {
+      width: 220px; /* Slightly larger card width on bigger screens */
+    }
+  }
+  
+  /* Medium Devices (Tablets) */
+  @media (max-width: 1024px) {
+    .book-card {
+      width: 180px;
+    }
+  
+    .popular-books h2 {
+      font-size: 2.2rem;
+    }
+  
+    .book-card img {
+      height: 220px;
+    }
+  }
+  
+  /* Mobile Devices */
+  @media (max-width: 768px) {
+    .book-slider {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .book-card {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1.5rem; /* Add margin between cards */
+    }
+  
+    .popular-books h2 {
+      font-size: 2rem;
+    }
+  
+    .book-card img {
+      height: 200px;
+    }
+  
+    .book-card h3 {
+      font-size: 1.1rem;
+    }
+  
+    .book-card a {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+  
+  /* Extra Small Devices (Phones) */
+  @media (max-width: 480px) {
+    .popular-books {
+      padding: 1.5rem;
+    }
+  
+    .popular-books h2 {
+      font-size: 1.8rem;
+    }
+  
+    .book-card {
+      max-width: 280px;
+    }
+  
+    .book-card img {
+      height: 180px;
+    }
+  
+    .book-card h3 {
+      font-size: 1rem;
+    }
+  
+    .book-card a {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.9rem;
+    }
+  }
+  
