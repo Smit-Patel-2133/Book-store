@@ -1,3 +1,6 @@
+import { NavLink } from "react-router-dom";
+import './OffersBanners.css';
+
 const OffersBanner = () => {
     return (
       <div className="offers-banner">
