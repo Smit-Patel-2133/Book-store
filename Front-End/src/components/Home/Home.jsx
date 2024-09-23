@@ -1,13 +1,14 @@
 import './Home.css';
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
 import Slider from '../slider/Slider.jsx';
-import BestsellingBooks from '../BestsellingBooks/BestsellingBooks.jsx';
+import ContentSlider from '../BestsellingBooks/ContentSlider.jsx';
 import m1 from '../../assets/images/book demo/b2.jpg';
 import m2 from '../../assets/images/book demo/b1.jpeg';
 import m3 from '../../assets/images/book demo/b3.jpeg';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import ReactSlick from 'react-slick';  // Import react-slick for the new slider
+// import ReactSlick from 'react-slick';
+import Footer from "../Footer/Footer.jsx";
 
 // Product Data
 const products = [
@@ -224,9 +225,10 @@ const Home = () => {
       <Slider />
       <div className="main-container">
         {/* Bestselling Books Slider */}
-        <BestsellingBooks products={products} name="new"/>
-        <BestsellingBooks products={products2} name="bestsell"/>
+        <ContentSlider products={products} name="new"/>
+        <ContentSlider products={products2} name="bestsell"/>
       </div>
+      <Footer/>
     </>
   );
 };
