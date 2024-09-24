@@ -126,19 +126,20 @@ body {
     align-items: center; /* Center align items */
     gap: 10px; /* Space between items */
 }
-
 .book-image {
     width: 80%;
-    height: auto; /* Maintain aspect ratio */
+    height: 300px; /* Set a fixed height */
+    object-fit: cover; /* Ensures the image maintains its aspect ratio */
     border-radius: 10px;
 }
+
 
 .book-author, .book-title {
     margin: 0;
 }
 
 .book-author {
-    font-size: 18px;
+    font-size: 10px;
     color: #888;
 }
 

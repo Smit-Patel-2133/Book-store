@@ -1,16 +1,21 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './Login.css';
+import React from 'react';
+
 import l1 from '../../assets/images/login/loginpage.png';
 import { useNavigate } from 'react-router-dom';
-
+import { currentUser } from '../../features/authentication/auth.js';
+import im from '../../assets/images/profile/1.png'
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent page reload
+        e.preventDefault();
 
         try {
             const response = await fetch('http://localhost:3000/login', {
@@ -23,11 +28,17 @@ const Login = () => {
 
             const data = await response.json();
             if (response.ok) {
-                navigate('/home_page'); // Navigate to home if login is successful
+                const { username, userEmail, profile_pic } = data;
+                const profilePicturePath = await import(`../../assets/images/profile/${profile_pic}.png`);
+                dispatch(currentUser({ name: username, email: userEmail, profilePicture: profilePicturePath.default }));
+
+                navigate('/home_page');
             } else {
-                setError(data.error); // Set error message if user doesn't exist or wrong credentials
+                console.error('Login failed:', data);
+                setError(data.error || 'Login failed. Please try again.');
             }
         } catch (error) {
+            console.error('Fetch error:', error);
             setError('An error occurred. Please try again later.');
         }
     };
@@ -36,7 +47,7 @@ const Login = () => {
         <div className="login-container">
             <div className="login-box">
                 <h2>Login</h2>
-                {error && <p className="error-message">{error}</p>} {/* Display error message */}
+                {error && <p className="error-message">{error}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label>Email</label>
@@ -58,7 +69,8 @@ const Login = () => {
                     </div>
                     <button type="submit" className="Login-Button">Login</button>
                 </form>
-                <div><h6>Don’t have an account?</h6>
+                <div>
+                    <h6>Don’t have an account?</h6>
                     <button
                         type="button"
                         className="SignUp-Button -mt-4 -ml-4"
@@ -76,6 +88,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-

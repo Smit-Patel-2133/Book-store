@@ -1,14 +1,15 @@
 import './NavigationBar.css';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import pi from "../../assets/images/login/loginpage.png";
-import {useNavigate} from "react-router-dom";
-import logo from "../../assets/images/logo/img.png"
+import { useNavigate } from "react-router-dom";
+import logo from "../../assets/images/logo/img.png";
+
 const NavigationBar = () => {
+    const user = useSelector(state => state.user_info.auth); // Access user info from Redux state
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const nevigate=useNavigate();
-    // Mocking user login status. Replace with actual logic for checking login status.
-    const isLoggedIn = false; // Change this to `true` if the user is logged in
+    const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -30,11 +31,13 @@ const NavigationBar = () => {
                 <li><NavLink to="/books">Books</NavLink></li>
                 <li><NavLink to="/blog">Blog</NavLink></li>
                 <li><NavLink to="/contact">Contact</NavLink></li>
+                {user.isLogedin && <li><NavLink to="/userProfile">Profile</NavLink></li>}
+                {user.email === 'makzadmin@makz.com' && <li><NavLink to="/admin">Dashboard</NavLink></li>}
             </ul>
 
             <div className="nav-icons">
-                {isLoggedIn ? (
-                    <img src={pi} className="profile-pic" alt="Profile" />
+                {user.isLogedin ? (
+                    <img src={user.profilePicture || pi} className="profile-pic" alt="Profile" />
                 ) : (
                     <div className="auth-buttons">
                         <NavLink to="/login">Login</NavLink>

@@ -2,7 +2,6 @@ import Slider from 'react-slick';
 import './ContentSlider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Footer from "../Footer/Footer.jsx";
 
 // Custom Previous Arrow
 const PrevArrow = ({ className, style, onClick }) => (
@@ -26,17 +25,16 @@ const NextArrow = ({ className, style, onClick }) => (
     </div>
 );
 
-// Slider settings
 const sliderSettings = {
   dots: true,
   infinite: true,
   speed: 500, // Reduced speed for smoother transition
   slidesToShow: 4,
-  slidesToScroll: 1, // Move one slide at a time manually
+  slidesToScroll: 1,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
-  draggable: true, // Enable mouse dragging
-  swipeToSlide: true, // Allows smooth sliding when swiping
+  draggable: true,
+  swipeToSlide: true,
   responsive: [
     {
       breakpoint: 1024,
@@ -72,28 +70,30 @@ const ContentSlider = ({ products, name }) => {
             <h2 className="section-title">{name}</h2>
           </div>
 
-          {/* Slider starts here */}
           <Slider {...sliderSettings}>
             {products.map((product) => (
-                <div key={product.id} className="product-card">
-                  <div className="product-tag">{product.tag}</div>
-                  <img src={product.image} alt={product.title} className="product-image" />
-                  <h3 className="product-label">{product.label}</h3>
+                <div key={product.id || product._id} className="product-card">
+                  <img
+                      src={product.thumbnail || 'default-image.jpg'}
+                      alt={product.title || 'No Title'}
+                      className="product-image"
+                  />
+                  <h3 className="product-label">{product.title || 'No Label'}</h3>
                   <div className="product-prices">
-                    <span className="current-price">Rs. {product.price.toFixed(2)}</span>
-                    <span className="discount-price">${product.discountPrice.toFixed(2)}</span>
+                    <span className="current-price">Rs. {product.price?.toFixed(2) || '0.00'}</span>
+                    {product.discountPrice && (
+                        <span className="discount-price">${product.discountPrice.toFixed(2)}</span>
+                    )}
                   </div>
                   <div className="product-icons">
                     <i className="fas fa-shopping-bag"></i>
-                    <i className="fas fa-search"></i>
+                    {/*<i className="fas fa-search"></i>*/}
                     <i className="fas fa-heart"></i>
                   </div>
                 </div>
             ))}
           </Slider>
-          {/* Slider ends here */}
         </section>
-
       </div>
   );
 };

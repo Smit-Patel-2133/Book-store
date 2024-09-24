@@ -18,18 +18,20 @@ const Books = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const booksPerPage = 12;
-
+    console.log(
+        searchTerm
+    )
     useEffect(() => {
         fetchBooks();
-    }, [selectedCategory, searchTerm]);  // Refetch when category or search term changes
+    }, [selectedCategory]);  // Refetch when category changes
 
     const fetchBooks = async () => {
         setLoading(true);
         try {
             const response = await axios.get('http://localhost:3000/books', {
                 params: {
-                    category: selectedCategory || undefined,  // Send category if selected
-                    search: searchTerm || undefined            // Send search if there’s a search term
+                    category: selectedCategory || undefined,
+                    search: searchTerm || undefined
                 }
             });
             setBooksData(response.data);
@@ -50,8 +52,22 @@ const Books = () => {
         setCurrentPage(1); // Reset to first page when category changes
     };
 
-    const handleSearch = () => {
-        fetchBooks(); // Fetch books when search button is clicked
+    const handleSearch = async () => {
+        if (!searchTerm) return; // Prevent search if input is empty
+        setLoading(true);
+        try {
+            console.log("inside",searchTerm)
+            const response = await axios.get('http://localhost:3000/rec', {
+                params: {
+                    name: searchTerm
+                }
+            });
+            setBooksData(response.data); // Update the books data with the response
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     if (loading) {
@@ -59,11 +75,7 @@ const Books = () => {
     }
 
     const filteredBooks = booksData.filter((book) =>
-        (selectedCategory ? book.categories.includes(selectedCategory) : true) && // Updated to handle 'categories' array
-        (searchTerm ?
-            book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.authors.toLowerCase().includes(searchTerm.toLowerCase())
-            : true)
+        (selectedCategory ? book.categories.includes(selectedCategory) : true)
     );
 
     const indexOfLastBook = currentPage * booksPerPage;
