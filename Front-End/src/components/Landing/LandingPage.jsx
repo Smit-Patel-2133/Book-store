@@ -8,6 +8,8 @@ import PopularBooks from "../PopularBooks/PopularBooks.jsx";
 import OffersBanners from "../OfferBanners/OffersBanners.jsx";
 import Testimonials from "../Testimonials/Testimonials.jsx";
 import Footer from "../Footer/Footer.jsx";
+// import Cart from "../Cart/Cart.jsx";
+
 
 
 
@@ -21,6 +23,7 @@ const LandingPage = () => {
             <PopularBooks/>
             <OffersBanners/>
             <Testimonials/>
+            {/* <Cart/> */}
             <Footer/>
             {/* <Slider/> */}
 

@@ -126,6 +126,7 @@ const Books = () => {
 
                     <div className="cart">
                         <button className="cart-info">
+                        
                             <i className="fas fa-shopping-cart"></i>
                             <span className="cart-text">Shopping Cart</span>
                             <span className="cart-total">
