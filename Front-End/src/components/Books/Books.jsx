@@ -18,12 +18,10 @@ const Books = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const booksPerPage = 12;
-    console.log(
-        searchTerm
-    )
+
     useEffect(() => {
         fetchBooks();
-    }, [selectedCategory]);  // Refetch when category changes
+    }, [selectedCategory]);
 
     const fetchBooks = async () => {
         setLoading(true);
@@ -44,19 +42,19 @@ const Books = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
-        setCurrentPage(1); // Reset to first page when search term changes
+        setCurrentPage(1);
+        setSelectedCategory(''); // Optional: Clear category when searching
     };
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
-        setCurrentPage(1); // Reset to first page when category changes
+        setCurrentPage(1);
     };
 
     const handleSearch = async () => {
         if (!searchTerm) return; // Prevent search if input is empty
         setLoading(true);
         try {
-            console.log("inside",searchTerm)
             const response = await axios.get('http://localhost:3000/rec', {
                 params: {
                     name: searchTerm
@@ -115,7 +113,12 @@ const Books = () => {
             <div className="main-container">
                 <div className="header-group">
                     <div className="browse-categories">
-                        <select className="category-dropdown" onChange={handleCategoryChange} value={selectedCategory}>
+                        <select
+                            className="category-dropdown"
+                            onChange={handleCategoryChange}
+                            value={selectedCategory}
+                            disabled={!!searchTerm} // Disable if search term is present
+                        >
                             <option value="">Browse Categories</option>
                             {categories.map((category, index) => (
                                 <option key={index} value={category}>{category}</option>
@@ -138,7 +141,6 @@ const Books = () => {
 
                     <div className="cart">
                         <button className="cart-info">
-                        
                             <i className="fas fa-shopping-cart"></i>
                             <span className="cart-text">Shopping Cart</span>
                             <span className="cart-total">

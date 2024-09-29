@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const axios = require('axios');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { spawn } = require("child_process");
 const natural = require('natural');
@@ -142,6 +143,7 @@ app.get('/books', async (req, res) => {
         }
 
         const books = await collection.find(query).sort({ ratings_count: -1 }).limit(2000).toArray();
+        console.log(books)
         res.status(200).json(books);
     } catch (error) {
         console.error('Failed to fetch books:', error);
@@ -198,73 +200,27 @@ async function getHomePageData() {
 }
 
 app.get('/rec', async (req, res) => {
-    const { name } = req.query;
-    console.log("name:-", name);
+    const bookTitle = req.query.name;
+
+    if (!bookTitle) {
+        return res.status(400).send({ error: 'No book title provided' });
+    }
 
     try {
-        const collection = await connectToDatabase2();
-        const bookData = await collection.find({ title: new RegExp(name, 'i') }).toArray();
-
-        if (bookData.length === 0) {
-            return res.status(404).send('Book not found');
-        }
-
-        const inputBook = bookData[0];
-        const inputBookTitle = inputBook.title || '';
-        const inputBookAuthors = Array.isArray(inputBook.authors) ? inputBook.authors.join(', ') : (inputBook.authors || '');
-        const inputBookDescription = inputBook.description || '';
-
-        // Fetch all books from the database
-        const allBooks = await collection.find({}).toArray();
-
-        // Prepare combined features for TF-IDF
-        const combinedFeatures = allBooks.map(book => {
-            const title = book.title || '';
-            const authors = Array.isArray(book.authors) ? book.authors.join(', ') : (book.authors || '');
-            const categories = book.categories || '';
-            const description = book.description || '';
-            return `${title} ${authors} ${categories} ${description}`;
+        // Forward request to Flask server and get the full book data
+        const response = await axios.get('http://localhost:5000/rec', {
+            params: {
+                name: bookTitle
+            }
         });
-
-        // Add the input book to the combined features
-        combinedFeatures.push(`${inputBookTitle} ${inputBookAuthors} ${inputBookDescription}`);
-
-        // Use TF-IDF Vectorizer to convert titles into numerical vectors
-        const tfidf = new TfIdf();
-        combinedFeatures.forEach(features => tfidf.addDocument(features));
-
-        // Get the vector for the input book title
-        const inputIndex = tfidf.documents.length - 1;
-        const inputVector = tfidf.listTerms(inputIndex).map(term => term.tfidf);
-
-        // Calculate cosine similarities
-        const similarities = [];
-        for (let i = 0; i < tfidf.documents.length - 1; i++) {
-            const bookVector = tfidf.listTerms(i).map(term => term.tfidf);
-            const cosineSimilarity = calculateCosineSimilarity(inputVector, bookVector);
-            similarities.push({ book: allBooks[i], similarity: cosineSimilarity });
-        }
-
-        // Sort by similarity and get the top 200
-        similarities.sort((a, b) => b.similarity - a.similarity);
-        const recommendedBooks = similarities.slice(0, 200).map(item => item.book);
-
-        res.status(200).json(recommendedBooks);
+        console.log(response.data);
+        // Send the complete book data to the frontend
+        res.json(response.data);
     } catch (error) {
-        console.error('Failed to fetch recommendations:', error);
-        res.status(500).json({ error: 'Failed to fetch recommendations' });
+        console.error('Error fetching recommendations:', error);
+        res.status(500).send('Error fetching recommendations');
     }
 });
-
-// Function to calculate cosine similarity
-function calculateCosineSimilarity(vecA, vecB) {
-    const dotProduct = vecA.reduce((sum, value, index) => sum + value * (vecB[index] || 0), 0);
-    const magnitudeA = Math.sqrt(vecA.reduce((sum, value) => sum + value * value, 0));
-    const magnitudeB = Math.sqrt(vecB.reduce((sum, value) => sum + value * value, 0));
-
-    if (magnitudeA === 0 || magnitudeB === 0) return 0; // Prevent division by zero
-    return dotProduct / (magnitudeA * magnitudeB);
-}
 
 // Start the server
 app.listen(port, () => {
