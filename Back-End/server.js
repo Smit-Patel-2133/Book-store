@@ -6,6 +6,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const { spawn } = require("child_process");
 const natural = require('natural');
 const TfIdf = natural.TfIdf;
+
 // Configuration
 const port = process.env.PORT || 3000;
 const mongoURI = process.env.MONGO_URI || 'mongodb+srv://smit02042004:TObFfwtBpduoy170@authentication.nrgs5.mongodb.net/?retryWrites=true&w=majority&appName=Authentication';
@@ -196,7 +197,6 @@ async function getHomePageData() {
     }
 }
 
-
 app.get('/rec', async (req, res) => {
     const { name } = req.query;
     console.log("name:-", name);
@@ -265,7 +265,6 @@ function calculateCosineSimilarity(vecA, vecB) {
     if (magnitudeA === 0 || magnitudeB === 0) return 0; // Prevent division by zero
     return dotProduct / (magnitudeA * magnitudeB);
 }
-
 
 // Start the server
 app.listen(port, () => {
