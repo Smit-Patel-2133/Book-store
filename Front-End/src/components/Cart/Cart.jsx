@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
-  // State to manage cart items with image
+  // State to manage Cart_Items items with image
   const [cartItems, setCartItems] = useState([
     { id: 1, title: 'Book Title 1', price: 19.99, image: 'https://via.placeholder.com/100' },
     { id: 2, title: 'Book Title 2', price: 25.99, image: 'https://via.placeholder.com/100' },

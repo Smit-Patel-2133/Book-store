@@ -17,7 +17,6 @@ import Footer from "../Footer/Footer.jsx";
 const LandingPage = () => {
     return (
         <div>
-            <Header/>
             <HeroSection/>
             <CategoriesSection/>
             <PopularBooks/>

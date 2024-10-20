@@ -1,9 +1,10 @@
 import './Home.css';
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
 import Slider from '../slider/Slider.jsx';
-import ContentSlider from '../BestsellingBooks/ContentSlider.jsx';
+import ContentSlider from '../ContentSlider/ContentSlider.jsx';
 import Footer from "../Footer/Footer.jsx";
 import { useState, useEffect } from 'react';
+import axios from "axios";
 
 const Home = () => {
   const [newArrivals, setNewArrivals] = useState([]);
@@ -13,11 +14,15 @@ const Home = () => {
   useEffect(() => {
     const fetchHomePageData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/homepage');
-        const data = await response.json();
+        // Corrected axios request
+        const response = await axios.get('http://localhost:3000/api/homepage/bestSellers');
+
+
+        // Directly access data from the response
+        const data = response.data;
+
         setNewArrivals(data.newArrivals || []);
         setBestSellers(data.bestSellers || []);
-        // console.log("smit:",newArrivals.current);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching homepage data:", error);

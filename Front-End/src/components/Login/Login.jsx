@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './Login.css';
 import React from 'react';
-
 import l1 from '../../assets/images/login/loginpage.png';
 import { useNavigate } from 'react-router-dom';
 import { currentUser } from '../../features/authentication/auth.js';
-import im from '../../assets/images/profile/1.png'
+import CryptoJS from 'crypto-js';
+
+const SECRET_KEY = 'your-secret-key'; // Same key used for encryption
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -18,7 +20,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/login', {
+            const response = await fetch('http://localhost:3000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,9 +31,22 @@ const Login = () => {
             const data = await response.json();
             if (response.ok) {
                 const { username, userEmail, profile_pic } = data;
-                const profilePicturePath = await import(`../../assets/images/profile/${profile_pic}.png`);
-                dispatch(currentUser({ name: username, email: userEmail, profilePicture: profilePicturePath.default }));
 
+                // Encrypt user data and store it in local storage
+                const userData = {
+                    name: username,
+                    email: userEmail,
+                    profilePicture: profile_pic,
+                    expiration: new Date().getTime() + 15 * 24 * 60 * 60 * 1000,
+                };
+                const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), SECRET_KEY).toString();
+                localStorage.setItem('user', encryptedData);
+
+                dispatch(currentUser({
+                    name: username,
+                    email: userEmail,
+                    profilePicture: profile_pic,
+                }));
                 navigate('/home_page');
             } else {
                 console.error('Login failed:', data);

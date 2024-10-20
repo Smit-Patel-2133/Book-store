@@ -2,22 +2,25 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import './Books.css';
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
+import Footer from "../Footer/Footer.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import SearchBar from './SearchBar';
+import BooksList from './BooksList';
+import Pagination from './Pagination';
 
 const Books = () => {
+    const dispatch = useDispatch();
+    const userEmail = useSelector(state => state.user_info.auth.email);
     const [booksData, setBooksData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [categories, setCategories] = useState([
-        'Fiction', 'Arts and Entertainment', 'Science and Technology', 'Non-Fiction',
-        'Business and Economics', 'Juvenile Fiction', 'Literary Collections',
-        'Biography & Autobiography', 'Philosophy and Religion',
-        'Juvenile Nonfiction', 'Poetry', 'Miscellaneous', 'Religion',
-        'Social Science', 'Comics & Graphic Novels', 'Drama'
-    ]);
+    const [categories] = useState(['Fiction', 'Arts and Entertainment', 'Science and Technology', 'Non-Fiction', 'Business and Economics', 'Juvenile Fiction', 'Literary Collections', 'Biography & Autobiography', 'Philosophy and Religion', 'Juvenile Nonfiction', 'Poetry', 'Miscellaneous', 'Religion', 'Social Science', 'Comics & Graphic Novels', 'Drama']);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const booksPerPage = 12;
+    const booksPerPage = 20;
+    const navigate = useNavigate();
+    const cart = useSelector(state => state.cart.cart);
 
     useEffect(() => {
         fetchBooks();
@@ -26,7 +29,7 @@ const Books = () => {
     const fetchBooks = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/books', {
+            const response = await axios.get('http://localhost:3000/api/books', {
                 params: {
                     category: selectedCategory || undefined,
                     search: searchTerm || undefined
@@ -43,7 +46,7 @@ const Books = () => {
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
         setCurrentPage(1);
-        setSelectedCategory(''); // Optional: Clear category when searching
+        setSelectedCategory(''); // Clear category when searching
     };
 
     const handleCategoryChange = (event) => {
@@ -55,17 +58,21 @@ const Books = () => {
         if (!searchTerm) return; // Prevent search if input is empty
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:3000/rec', {
+            const response = await axios.get('http://localhost:5000/rec', {
                 params: {
                     name: searchTerm
                 }
             });
-            setBooksData(response.data); // Update the books data with the response
+            setBooksData(response.data);
         } catch (err) {
             console.log(err);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleBookClick = (book) => {
+        navigate(`/books/${book.id}`, { state: { book } });
     };
 
     if (loading) {
@@ -80,94 +87,28 @@ const Books = () => {
     const indexOfFirstBook = indexOfLastBook - booksPerPage;
     const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
-
-    const renderPaginationButtons = () => {
-        let buttons = [];
-        if (currentPage > 1) {
-            buttons.push(
-                <button key={currentPage - 1} onClick={() => paginate(currentPage - 1)}>
-                    {currentPage - 1}
-                </button>
-            );
-        }
-        buttons.push(
-            <button key={currentPage} className="active">
-                {currentPage}
-            </button>
-        );
-        if (currentPage < totalPages) {
-            buttons.push(
-                <button key={currentPage + 1} onClick={() => paginate(currentPage + 1)}>
-                    {currentPage + 1}
-                </button>
-            );
-        }
-        return buttons;
-    };
 
     return (
         <>
             <NavigationBar />
             <div className="main-container">
-                <div className="header-group">
-                    <div className="browse-categories">
-                        <select
-                            className="category-dropdown"
-                            onChange={handleCategoryChange}
-                            value={selectedCategory}
-                            disabled={!!searchTerm} // Disable if search term is present
-                        >
-                            <option value="">Browse Categories</option>
-                            {categories.map((category, index) => (
-                                <option key={index} value={category}>{category}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="search">
-                        <input
-                            type="text"
-                            className="search-input"
-                            placeholder="Search for books..."
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                        />
-                        <button className="search-button" onClick={handleSearch}>
-                            <i className="fas fa-search"></i> Search
-                        </button>
-                    </div>
-
-                    <div className="cart">
-                        <button className="cart-info">
-                            <i className="fas fa-shopping-cart"></i>
-                            <span className="cart-text">Shopping Cart</span>
-                            <span className="cart-total">
-                                {isLoggedIn ? 'Total: ₹1200' : '0 ₹'}
-                            </span>
-                        </button>
-                    </div>
-                </div>
-
-                <div className="books-container">
-                    {currentBooks.map((book, index) => (
-                        <div key={index} className="book-card">
-                            <img src={book.thumbnail} alt={book.title} className="book-image" />
-                            <h3 className="book-author">{book.authors}</h3>
-                            <h2 className="book-title">{book.title}</h2>
-                            <div className="book-price-group">
-                                <span className="book-price">RS. {book.price}</span>
-                                <span className="book-original-price">{book.originalPrice}</span>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="pagination">
-                    {renderPaginationButtons()}
-                </div>
+                <SearchBar
+                    categories={categories}
+                    selectedCategory={selectedCategory}
+                    onCategoryChange={handleCategoryChange}
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
+                    onSearch={handleSearch}
+                />
+                <BooksList books={currentBooks} onBookClick={handleBookClick} />
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
             </div>
+            <Footer />
         </>
     );
 };

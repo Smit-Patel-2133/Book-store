@@ -1,0 +1,269 @@
+/* Main container for the book detail */
+.book-detail-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Book image section */
+.book-image {
+    width: 40%;
+    padding-right: 20px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.book-image img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Book information section */
+.book-info {
+    flex: 1;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Book title */
+.book-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 15px;
+}
+
+/* Book author */
+.book-author {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+/* Book description */
+.book-description {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+/* Price and purchase section */
+.book-price-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.book-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #b12704;
+    margin-bottom: 10px;
+}
+
+.book-original-price {
+    font-size: 16px;
+    color: #888;
+    text-decoration: line-through;
+}
+
+/* Add-to-cart section */
+.action-buttons {
+    margin-top: 15px;
+}
+
+.add-to-cart-btn,
+.add-to-wishlist-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No borders */
+    padding: 10px 15px; /* Some padding */
+    margin-right: 10px; /* Space between buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Larger text */
+    width: 300px;
+}
+
+.add-to-cart-btn:hover,
+.add-to-wishlist-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Star container */
+.star-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+/* Style for stars */
+.star {
+    font-size: 20px;
+    color: #ffcc00; /* Gold color */
+}
+
+.star-empty {
+    color: #ddd; /* Gray color for empty stars */
+}
+
+.view-more-details-btn {
+    background-color: transparent;
+    border: none;
+    color: blue;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.book-price {
+    font-weight: bold;
+    color: green;
+}
+
+.book-original-price {
+    color: red;
+    margin-left: 10px;
+}
+
+.discount-mark {
+    font-weight: bold;
+    color: orange;
+    margin-left: 5px;
+}
+
+/* General styles for responsiveness */
+@media (max-width: 768px) {
+    .book-detail-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .book-info {
+        margin-left: 0;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .book-title {
+        font-size: 24px;
+    }
+
+    .book-author {
+        font-size: 16px;
+    }
+
+    .book-description {
+        font-size: 14px;
+    }
+
+    .book-price-group {
+        justify-content: center;
+    }
+
+    .add-to-cart-btn,
+    .add-to-wishlist-btn {
+        width: 100%; /* Full width on mobile */
+    }
+}
+
+/* src/components/BookDetail/BookDetail.css */
+
+.book-detail-container {
+    display: flex;
+    padding: 20px;
+}
+
+.book-image img {
+    max-width: 300px;
+    height: 400px;
+}
+
+.book-info {
+    margin-left: 20px;
+    flex: 1;
+}
+
+.book-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.book-author {
+    font-size: 20px;
+    color: gray;
+}
+
+.book-description {
+    margin: 10px 0;
+}
+
+.star-rating {
+    display: flex;
+    align-items: center;
+}
+
+.star {
+    color: gold;
+    font-size: 20px;
+}
+
+.star-empty {
+    color: lightgray;
+}
+
+.book-price-group {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.book-price {
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.book-original-price {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.discount-mark {
+    color: green;
+    font-weight: bold;
+}
+
+.action-buttons {
+    margin-top: 20px;
+}
+
+.add-to-cart-btn,
+.add-to-wishlist-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.view-more-btn {
+    background-color: transparent;
+    border: none;
+    color: blue;
+    cursor: pointer;
+}
+

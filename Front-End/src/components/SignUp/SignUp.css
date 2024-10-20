@@ -58,7 +58,7 @@
     font-size: 1rem;
 }
 
-button {
+.signup-button {
     padding: 0.75rem;
     width: 100%;
     background-color: #ffbf00; /* Amber button */
@@ -70,7 +70,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.signup-button:hover {
     background-color: #e5a800;
 }
 
@@ -128,12 +128,12 @@ button:hover {
         background-color: #fff; /* White background for input fields */
     }
 
-    button {
+    .signup-button {
         background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
         color: white;
     }
 
-    button:hover {
+    .signup-button:hover {
         background-color: #e5a800;
     }
 }
