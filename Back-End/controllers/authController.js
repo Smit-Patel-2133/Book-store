@@ -26,7 +26,6 @@ async function signup(req, res) {
 // Login function
 async function login(req, res) {
     const { email, password } = req.body;
-    console.log(email, password);
     const collection = (await connectToDatabase()).collection('userInfo');
 
     try {
@@ -40,10 +39,7 @@ async function login(req, res) {
             return res.status(400).json({ error: 'Invalid password' });
         }
 
-        // Store user email in session
-        req.session.userEmail = user.email;
-
-        // Send user data back to the frontend
+        // Send user data back to the frontend without storing in session
         res.status(200).json({
             message: 'Login successful',
             username: user.username,
@@ -58,14 +54,8 @@ async function login(req, res) {
 
 // Logout function
 async function logout(req, res) {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ error: 'Failed to logout' });
-        }
-        // Clear local storage on the client side (this part should be handled in your frontend code)
-        res.status(200).json({ message: 'Logout successful' });
-    });
+    // Handle logout on the client side
+    res.status(200).json({ message: 'Logout successful' });
 }
-
 
 module.exports = { signup, login, logout };

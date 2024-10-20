@@ -1,9 +1,8 @@
 import './NavigationBar.css';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import pi from "../../assets/images/login/loginpage.png";
-import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo/img.png";
 import { currentUser } from '../../features/authentication/auth.js'; // Adjust the import path
 
@@ -12,11 +11,31 @@ const NavigationBar = () => {
     const user = useSelector(state => state.user_info.auth); // Access user info from Redux state
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(pi); // Default to a placeholder image
     const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+    console.log("nav bar :user :-", user)
+
+    useEffect(() => {
+        if (user.profilePicture) {
+            const loadProfilePicture = async () => {
+                try {
+                    console.log("user pic",user.profilePicture);
+                    const profPic = await import(`../../assets/images/profile/${user.profilePicture}.png`);
+                    setProfilePicture(profPic.default); // Use `default` to access the image
+                } catch (error) {
+                    console.error("Error loading profile picture:", error);
+                    setProfilePicture(pi); // Fallback to the placeholder image
+                }
+            }
+            loadProfilePicture();
+        } else {
+            setProfilePicture(pi); // Fallback if no profile picture is set
+        }
+    }, [user.profilePicture]);
 
     // Check session storage on component mount
     useEffect(() => {
@@ -36,9 +55,12 @@ const NavigationBar = () => {
     const logout = () => {
         // Clear session storage
         sessionStorage.removeItem('user');
+        // Clear local storage (if you're storing user data here)
+        localStorage.removeItem('user'); // Ensure this matches the key used to store user data in localStorage
         // Clear Redux state
         dispatch(currentUser({ name: '', email: '', isLogedin: false, profilePicture: null }));
-        navigate('/login'); // Redirect to login after logout
+        // Redirect to login page
+        navigate('/home_page');
     };
 
     return (
@@ -62,7 +84,7 @@ const NavigationBar = () => {
                     <div className="nav-icons">
                         {user.isLogedin ? (
                             <div className="profile-wrapper">
-                                <img src={user.profilePicture || pi} className="profile-pic" alt="Profile" onClick={toggleMenu} />
+                                <img src={profilePicture} className="profile-pic" alt="Profile" onClick={toggleMenu} />
                                 {isMenuOpen && (
                                     <div className="dropdown-menu">
                                         <button onClick={() => navigate("/userProfile")}>Profile</button>
