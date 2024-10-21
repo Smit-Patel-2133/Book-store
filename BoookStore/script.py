@@ -57,12 +57,14 @@ def get_recommendations(book_title):
         "publisher": 1,
         "setting": 1,
         "characters": 1,
-        "genres": 1,
+        "genres": 1,  # Make sure this is an array
         "main_genre": 1,
         "rating": 1,
         "likes": 1,
         "price": 1,  # Make sure to include price if it exists in the database
         "coverImg": 1,  # Make sure to include cover image if it exists
+        "offer": 1,
+        "rating_count":1,
     }))
 
     # Create a list of combined features for all books
@@ -78,7 +80,7 @@ def get_recommendations(book_title):
     # Calculate cosine similarity between the searched book and all other books
     cosine_sim = cosine_similarity([vectors[-1]], vectors[:-1])
 
-    # Get indices of the top 5 most similar books
+    # Get indices of the top 100 most similar books
     similar_indices = cosine_sim[0].argsort()[-100:][::-1]
 
     # Extract the corresponding full book data for recommendations
@@ -95,16 +97,18 @@ def get_recommendations(book_title):
             "publisher": book.get('publisher', ''),
             "setting": book.get('setting', ''),
             "characters": book.get('characters', ''),
-            "genres": book.get('genres', []),
+            "genres": book.get('genres', []),  # This is now handled as an array
             "main_genre": book.get('main_genre', ''),
             "rating": book.get('rating', 0),
             "likes": book.get('likes', 0),
             "price": book.get('price', 0),  # Add price if available
             "coverImg": book.get('coverImg', ''),  # Add cover image if available
+            "offer": book.get('offer', 0),
+            "rating_count":book.get('rating_count',0),
         })
 
-    return related_books
 
+    return related_books
 
 @app.route('/rec', methods=['GET'])
 def recommend_books():

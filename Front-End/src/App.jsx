@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './features/authentication/auth.js';
-import { fetchCartItems } from './features/Cart_Items/cart.js'; // Import fetchCartItems
+import { fetchCartItems } from './features/Cart_Items/cart.js';
+import { fetchWishlistItems } from './features/wishList/wishlist.js'; // Import fetchWishlistItems
 import CryptoJS from 'crypto-js';
 import { useNavigate, Outlet } from 'react-router-dom';
 
@@ -29,6 +30,9 @@ const App = () => {
 
                     // Fetch cart items for the user and store in Redux
                     dispatch(fetchCartItems(userData.email)); // Pass userId/email for fetching cart
+
+                    // Fetch wishlist items for the user
+                    dispatch(fetchWishlistItems(userData.email)); // Pass userId/email for fetching wishlist
                 } else {
                     // If session expired, redirect to login
                     localStorage.removeItem('user');

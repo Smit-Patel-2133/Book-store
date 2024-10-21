@@ -2,7 +2,7 @@ import React from 'react';
 import BookCard from './BookCard';
 
 const BooksList = ({ books, onBookClick }) => {
-    console.log(books)
+
     return (
         <div className="books-container">
             {books.map((book, index) => (

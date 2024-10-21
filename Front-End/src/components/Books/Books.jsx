@@ -88,7 +88,7 @@ const Books = () => {
     const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
-
+    // console.log("currentBooks",currentBooks)
     return (
         <>
             <NavigationBar />

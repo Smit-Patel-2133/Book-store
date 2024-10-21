@@ -2,6 +2,7 @@ import Slider from 'react-slick';
 import './ContentSlider.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useNavigate } from "react-router-dom";
 
 // Custom Previous Arrow
 const PrevArrow = ({ className, style, onClick }) => (
@@ -63,6 +64,12 @@ const sliderSettings = {
 };
 
 const ContentSlider = ({ products, name }) => {
+  const navigate = useNavigate();
+
+  const handleBookClick = (book) => {
+    navigate(`/books/${book._id}`, { state: { book } }); // Navigate to the book details page with the book data
+  };
+
   return (
       <div className="main-container">
         <section className="products-section">
@@ -71,27 +78,34 @@ const ContentSlider = ({ products, name }) => {
           </div>
 
           <Slider {...sliderSettings}>
-            {products.map((product) => (
-                <div key={product.id || product._id} className="product-card">
-                  <img
-                      src={product.coverImg || 'default-image.jpg'}
-                      alt={product.title || 'No Title'}
-                      className="product-image"
-                  />
-                  <h3 className="product-label">{product.title || 'No Label'}</h3>
-                  <div className="product-prices">
-                    <span className="current-price">Rs. {product.price?.toFixed(2) || '0.00'}</span>
-                    {product.discountPrice && (
-                        <span className="discount-price">${product.discountPrice.toFixed(2)}</span>
-                    )}
+            {products.map((product) => {
+              // Calculate discount
+              const discountPercentage = product.offer ? product.offer : 0; // Use offer if available, else 0
+              const currentPrice = product.price || 0;
+              const discountAmount = (currentPrice * discountPercentage) / 100;
+              const finalPrice = currentPrice - discountAmount;
+
+              return (
+                  <div key={product.id || product._id} className="product-card" onClick={() => handleBookClick(product)}>
+                    <img
+                        src={product.coverImg || 'default-image.jpg'}
+                        alt={product.title || 'No Title'}
+                        className="product-image"
+                    />
+                    <h3 className="product-label">{product.title || 'No Label'}</h3>
+                    <div className="product-prices">
+                      <span className="current-price">Rs. {finalPrice.toFixed(2)}</span>
+                      {discountPercentage > 0 && (
+                          <span className="discount-price">Rs. {currentPrice.toFixed(2)}</span>
+                      )}
+                    </div>
+                    <div className="product-icons">
+                      <i className="fas fa-shopping-bag"></i>
+                      <i className="fas fa-heart"></i>
+                    </div>
                   </div>
-                  <div className="product-icons">
-                    <i className="fas fa-shopping-bag"></i>
-                    {/*<i className="fas fa-search"></i>*/}
-                    <i className="fas fa-heart"></i>
-                  </div>
-                </div>
-            ))}
+              );
+            })}
           </Slider>
         </section>
       </div>

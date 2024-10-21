@@ -7,9 +7,9 @@
     padding: 20px;
     margin: 20px auto;
     max-width: 1200px;
-    background-color: #fff;
+    background-color: #f9f9f9; /* Light background */
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Book image section */
@@ -18,14 +18,15 @@
     padding-right: 20px;
     text-align: center;
     border-right: 1px solid #ddd;
+    transition: transform 0.3s;
 }
 
 .book-image img {
     width: 100%;
     max-width: 300px;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Book information section */
@@ -39,15 +40,16 @@
 
 /* Book title */
 .book-title {
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 700;
-    color: #111;
-    margin-bottom: 15px;
+    color: #333;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Book author */
 .book-author {
-    font-size: 18px;
+    font-size: 20px;
     color: #555;
     margin-bottom: 15px;
 }
@@ -55,9 +57,9 @@
 /* Book description */
 .book-description {
     font-size: 16px;
-    color: #333;
+    color: #444;
     margin-bottom: 20px;
-    line-height: 1.8;
+    line-height: 1.6;
 }
 
 /* Price and purchase section */
@@ -70,9 +72,9 @@
 
 .book-price {
     font-size: 24px;
-    font-weight: 700;
+    font-weight: bold;
     color: #b12704;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .book-original-price {
@@ -84,6 +86,8 @@
 /* Add-to-cart section */
 .action-buttons {
     margin-top: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .add-to-cart-btn,
@@ -91,12 +95,12 @@
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
     border: none; /* No borders */
-    padding: 10px 15px; /* Some padding */
-    margin-right: 10px; /* Space between buttons */
+    padding: 12px; /* Some padding */
+    margin: 5px 0; /* Space between buttons */
     cursor: pointer; /* Pointer cursor on hover */
     border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Larger text */
-    width: 300px;
+    font-size: 18px; /* Larger text */
+    transition: background-color 0.3s; /* Smooth transition */
 }
 
 .add-to-cart-btn:hover,
@@ -114,7 +118,7 @@
 
 /* Style for stars */
 .star {
-    font-size: 20px;
+    font-size: 22px;
     color: #ffcc00; /* Gold color */
 }
 
@@ -122,36 +126,18 @@
     color: #ddd; /* Gray color for empty stars */
 }
 
-.view-more-details-btn {
-    background-color: transparent;
-    border: none;
-    color: blue;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.book-price {
-    font-weight: bold;
-    color: green;
-}
-
-.book-original-price {
-    color: red;
-    margin-left: 10px;
-}
-
-.discount-mark {
-    font-weight: bold;
-    color: orange;
-    margin-left: 5px;
-}
-
-/* General styles for responsiveness */
+/* Responsive styles */
 @media (max-width: 768px) {
     .book-detail-container {
         flex-direction: column;
         align-items: center;
         padding: 15px;
+    }
+
+    .book-image {
+        border-right: none; /* Remove border on mobile */
+        padding: 0; /* Remove padding */
+        margin-bottom: 20px; /* Add margin below */
     }
 
     .book-info {
@@ -161,19 +147,15 @@
     }
 
     .book-title {
-        font-size: 24px;
+        font-size: 28px;
     }
 
     .book-author {
-        font-size: 16px;
+        font-size: 18px;
     }
 
     .book-description {
         font-size: 14px;
-    }
-
-    .book-price-group {
-        justify-content: center;
     }
 
     .add-to-cart-btn,
@@ -181,89 +163,3 @@
         width: 100%; /* Full width on mobile */
     }
 }
-
-/* src/components/BookDetail/BookDetail.css */
-
-.book-detail-container {
-    display: flex;
-    padding: 20px;
-}
-
-.book-image img {
-    max-width: 300px;
-    height: 400px;
-}
-
-.book-info {
-    margin-left: 20px;
-    flex: 1;
-}
-
-.book-title {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.book-author {
-    font-size: 20px;
-    color: gray;
-}
-
-.book-description {
-    margin: 10px 0;
-}
-
-.star-rating {
-    display: flex;
-    align-items: center;
-}
-
-.star {
-    color: gold;
-    font-size: 20px;
-}
-
-.star-empty {
-    color: lightgray;
-}
-
-.book-price-group {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.book-price {
-    font-size: 22px;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.book-original-price {
-    color: gray;
-    text-decoration: line-through;
-}
-
-.discount-mark {
-    color: green;
-    font-weight: bold;
-}
-
-.action-buttons {
-    margin-top: 20px;
-}
-
-.add-to-cart-btn,
-.add-to-wishlist-btn {
-    padding: 10px 15px;
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-.view-more-btn {
-    background-color: transparent;
-    border: none;
-    color: blue;
-    cursor: pointer;
-}
-

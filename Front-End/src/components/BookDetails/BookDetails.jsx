@@ -3,46 +3,49 @@ import { useLocation } from 'react-router-dom';
 import './BookDetail.css';
 import NavigationBar from '../NavigationBar/NavigationBar.jsx';
 import { useSelector, useDispatch } from "react-redux";
-import { addItemToCart, removeItemFromCart } from '../../features/Cart_Items/cart.js'; // Import actions
+import { addItemToCart, removeItemFromCart } from '../../features/Cart_Items/cart.js'; // Import cart actions
+import { addItemToWishlist, removeItemFromWishlist } from '../../features/Wishlist/wishlist.js'; // Import wishlist actions
 import axios from "axios";
+
+const renderStars = (rating) => {
+    const fullStars = Math.floor(rating); // Full stars
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0; // Half star if needed
+    const emptyStars = 5 - fullStars - halfStar; // Empty stars
+
+    const stars = [];
+    // Add full stars
+    for (let i = 0; i < fullStars; i++) {
+        stars.push(<span key={i} className="star">★</span>);
+    }
+    // Add half star if applicable
+    if (halfStar) {
+        stars.push(<span key="half" className="star">★</span>);
+    }
+    // Add empty stars
+    for (let i = 0; i < emptyStars; i++) {
+        stars.push(<span key={`empty-${i}`} className="star star-empty">★</span>);
+    }
+
+    return stars;
+};
 
 const BookDetail = () => {
     const location = useLocation();
     const { book } = location.state;
-    console.log("book:-",book.coverImg)
     const user = useSelector(state => state.user_info.auth);
     const cartItems = useSelector(state => state.cart.items);
-    const dispatch = useDispatch(); // Get dispatch function from Redux
+    const wishlistItems = useSelector(state => state.wishlist.wishlistItems);
+    const dispatch = useDispatch();
 
-    const discountPercentage = 0.4; // 40%
-    const originalPrice = book.price / (1 - discountPercentage); // Assuming `price` is the discounted price
-    const discountedPrice = book.price;
+    // Pricing logic
+    const originalPrice = book.price; // Original price
+    const discountPercentage = book.offer ? book.offer / 100 : 0; // Convert percentage to decimal
+    const discountedPrice = originalPrice * (1 - discountPercentage); // Calculate the discounted price
 
+    // State to manage image scaling
+    const [imageScale, setImageScale] = useState(1); // Initialize imageScale state
     // State to manage description visibility
     const [showFullDescription, setShowFullDescription] = useState(false);
-
-    // Function to render stars based on rating
-    const renderStars = (rating) => {
-        const fullStars = Math.floor(rating); // Full stars
-        const halfStar = rating % 1 >= 0.5 ? 1 : 0; // Half star if needed
-        const emptyStars = 5 - fullStars - halfStar; // Empty stars
-
-        const stars = [];
-        // Add full stars
-        for (let i = 0; i < fullStars; i++) {
-            stars.push(<span key={i} className="star">★</span>);
-        }
-        // Add half star if applicable
-        if (halfStar) {
-            stars.push(<span key="half" className="star">★</span>);
-        }
-        // Add empty stars
-        for (let i = 0; i < emptyStars; i++) {
-            stars.push(<span key={`empty-${i}`} className="star star-empty">★</span>);
-        }
-
-        return stars;
-    };
 
     // Function to toggle the description
     const toggleDescription = () => {
@@ -54,7 +57,7 @@ const BookDetail = () => {
         const words = description.split(' ').filter(word => word.trim() !== '');
         return showFullDescription ? description : words.slice(0, 75).join(' ') + '...';
     };
-    console.log("cart items:-",cartItems)
+
     // Function to handle adding/removing from cart
     const handleCartToggle = async () => {
         const userId = user.email; // assuming user.email is a string
@@ -72,13 +75,11 @@ const BookDetail = () => {
 
                 // Dispatch the action to add to Redux store
                 dispatch(addItemToCart({ bookId, title: book.title, price: discountedPrice }));
-
-                console.log(response.data);
+                console.log("Added to Cart:", response.data);
             } else {
                 // Remove from cart
-                console.log("remove:",userId,bookId)
                 await axios.delete(`http://localhost:3000/api/cart/remove`, {
-                    data: { userId, bookId } // Sending data in the request body
+                    data: { userId, bookId }
                 });
 
                 // Dispatch the action to remove from Redux store
@@ -86,28 +87,60 @@ const BookDetail = () => {
                 console.log(`Removed ${book.title} from cart`);
             }
         } catch (e) {
-            console.log(e);
+            console.error("Error in Cart Toggle:", e);
         }
     };
 
     const isInCart = cartItems.some(item => item.bookId === book._id);
+    console.log("Is In Cart:", isInCart);
 
-    // Function to handle adding to wishlist
-    const handleAddToWishlist = () => {
-        // Logic to add the book to wishlist (e.g., updating state or calling API)
-        alert(`${book.title} has been added to your wishlist!`);
+    // Function to handle adding/removing from wishlist
+    const handleWishlistToggle = async () => {
+        const userId = user.email; // assuming user.email is a string
+        const bookId = book._id; // assuming book.id is a string
+
+        try {
+            // Check if the book is already in the wishlist
+            const existingWishlistItem = wishlistItems.find(item => item.id === bookId);
+            if (!existingWishlistItem) {
+                // Add to wishlist
+                const response = await axios.post("http://localhost:3000/api/wishlist/add", {
+                    userId: userId,
+                    bookId: bookId
+                });
+
+                // Dispatch the action to add to Redux store
+                dispatch(addItemToWishlist({ id: bookId, title: book.title }));
+                console.log("Added to Wishlist:", response.data);
+            } else {
+                // Remove from wishlist
+                await axios.delete(`http://localhost:3000/api/wishlist/remove`, {
+                    data: { userId, bookId }
+                });
+
+                // Dispatch the action to remove from Redux store
+                dispatch(removeItemFromWishlist(bookId));
+                console.log(`Removed ${book.title} from wishlist`);
+            }
+        } catch (e) {
+            console.error("Error in Wishlist Toggle:", e);
+        }
     };
+
+    const isInWishlist = wishlistItems.some(item => item.id === book._id);
+    console.log("Is In Wishlist:", isInWishlist);
 
     return (
         <>
             <NavigationBar />
             <div className="book-detail-container">
-                <div className="book-image">
-                    <img src={book.coverImg} alt={book.title} />
+                <div className="book-image" onMouseOver={() => setImageScale(1.05)} onMouseOut={() => setImageScale(1)}>
+                    <img src={book.coverImg} alt={book.title} style={{ transform: `scale(${imageScale})` }} />
                 </div>
+
                 <div className="book-info">
                     <h2 className="book-title">{book.title}</h2>
-                    <h3 className="book-author">By {book.authors}</h3>
+                    <h3 className="book-author">By {book.author}</h3>
 
                     {/* Truncated description with View More button */}
                     <p className="book-description">{truncateDescription(book.description)}</p>
@@ -117,14 +150,17 @@ const BookDetail = () => {
 
                     {/* Star rating and rating count */}
                     <div className="star-rating">
-                        {renderStars(book.average_rating)}
-                        <span>({book.ratings_count} ratings)</span>
+                        {renderStars(book.rating)}
+                        <span>({book.rating_count} ratings)</span>
                     </div>
 
                     <div className="book-price-group">
-                        <span className="book-price">Price: RS. {discountedPrice}</span>
-                        <span className="book-original-price">Original: <span style={{ textDecoration: 'line-through' }}>RS. {originalPrice.toFixed(2)}</span></span>
-                        <span className="discount-mark">(-40%)</span>
+                        <span className="book-price">Price: RS. {discountedPrice.toFixed(2)}</span>
+                        {discountPercentage > 0 && (
+                            <span className="book-original-price">Original: <span style={{ textDecoration: 'line-through' }}>RS. {originalPrice.toFixed(2)}</span></span>
+                        )}
+                        {discountPercentage > 0 &&
+                            <span className="discount-mark">(-{(discountPercentage * 100).toFixed(0)}%)</span>}
                     </div>
 
                     {/* Add to Cart and Wishlist Buttons */}
@@ -132,7 +168,9 @@ const BookDetail = () => {
                         <button onClick={handleCartToggle} className="add-to-cart-btn">
                             {isInCart ? 'Remove from Cart' : 'Add to Cart'}
                         </button>
-                        <button onClick={handleAddToWishlist} className="add-to-wishlist-btn">Add to Wishlist</button>
+                        <button onClick={handleWishlistToggle} className="add-to-wishlist-btn">
+                            {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                        </button>
                     </div>
                 </div>
             </div>

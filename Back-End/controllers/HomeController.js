@@ -1,4 +1,4 @@
-const {connectToDatabase} = require('../config/database');
+const { connectToDatabase } = require('../config/database');
 
 async function getHomePageData(req, res) {
     console.log("Fetching home page data..."); // More informative log
@@ -9,41 +9,18 @@ async function getHomePageData(req, res) {
         // Fetch the 10 newest books by publication year (new arrivals)
         const newArrivals = await collection
             .find({
-                _id: {$exists: true},
-                title: {$exists: true},
-                author: {$exists: true},
-                description: {$exists: true},
-                language: {$exists: true},
-                genres: {$exists: true},
-                characters: {$exists: true},
-                bookFormat: {$exists: true},
-                pages: {$exists: true},
-                publisher: {$exists: true},
-                publishDate: {$exists: true},
-                awards: {$exists: true},
-                setting: {$exists: true},
-                coverImg: {$exists: true},
-                price: {$exists: true},
-                main_genre: {$exists: true},
-                rating: {$exists: true},
-                rating_count: {$exists: true},
-                likes: {$exists: true},
 
             })
-            .sort({publishDate: -1}) // Change to sort by publishDate
+            .sort({ publishDate: -1 }) // Change to sort by publishDate
             .limit(10)
             .toArray();
 
-        // Fetch the 10 best-rated books (best sellers)
+        // Fetch all best-selling books based on the number_of_orders field
         const bestSellers = await collection
             .find({
-                average_rating: {$exists: true},
-                title: {$exists: true},
-                authors: {$exists: true},
-                categories: {$exists: true},
-                thumbnail: {$exists: true}
+
             })
-            .sort({average_rating: -1})
+            .sort({ number_of_orders: -1 })
             .limit(10)
             .toArray();
 
@@ -54,8 +31,8 @@ async function getHomePageData(req, res) {
         });
     } catch (error) {
         console.error("Database or query issue:", error);
-        res.status(500).json({error: "Unable to fetch homepage data due to database issues."});
+        res.status(500).json({ error: "Unable to fetch homepage data due to database issues." });
     }
 }
 
-module.exports = {getHomePageData};
+module.exports = { getHomePageData };

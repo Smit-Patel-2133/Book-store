@@ -17,13 +17,11 @@ const NavigationBar = () => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
-    console.log("nav bar :user :-", user)
 
     useEffect(() => {
         if (user.profilePicture) {
             const loadProfilePicture = async () => {
                 try {
-                    console.log("user pic",user.profilePicture);
                     const profPic = await import(`../../assets/images/profile/${user.profilePicture}.png`);
                     setProfilePicture(profPic.default); // Use `default` to access the image
                 } catch (error) {

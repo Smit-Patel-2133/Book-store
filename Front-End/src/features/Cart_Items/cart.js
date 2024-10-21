@@ -4,6 +4,7 @@ import axios from "axios";
 // Async action to fetch cart items
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async (userId) => {
     const response = await axios.get(`http://localhost:3000/api/cart/getCartItem?userId=${userId}`);
+    console.log("the data",response.data);
     return response.data;
 });
 
