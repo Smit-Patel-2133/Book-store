@@ -1,0 +1,51 @@
+.dashboard {
+    display: flex;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 16px;
+}
+
+.book-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book-item button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.book-item img{
+    height: 30px;
+    width: 30px;
+
+}
+.book-item button:hover {
+    background-color: #45a049;
+}
+
+/* Sticky sidebar */
+.dashboard .AdminSidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}

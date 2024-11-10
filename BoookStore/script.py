@@ -113,6 +113,7 @@ def get_recommendations(book_title):
 @app.route('/rec', methods=['GET'])
 def recommend_books():
     """API endpoint to recommend books based on a title."""
+    print("request received")
     book_title = request.args.get('name')
     if book_title:
         recommendations = get_recommendations(book_title)

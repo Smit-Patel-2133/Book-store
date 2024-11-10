@@ -9,6 +9,9 @@ const bookRoutes = require('./routes/bookRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const wishlistRoutes = require('./routes/wishlistRoutes');
 const homeRoutes = require('./routes/homeRoutes');
+const adminRoutes=require('./routes/adminRoutes');
+const checkoutRoutes = require('./routes/checkoutRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -20,16 +23,6 @@ app.use(cors());
 
 connectToDatabase();
 
-// Session middleware
-app.use(session({
-    secret: 'your_secret_key', // Change this to a secure key
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/your_db_name' }),
-    cookie: { maxAge: 180 * 60 * 1000 } // Session duration (3 hours)
-}));
-
-
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -37,7 +30,9 @@ app.use('/api/books', bookRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/homepage', homeRoutes);
-
+app.use('/api/admin', adminRoutes)
+app.use('/api/checkout',checkoutRoutes)
+app.use('/api/payment',paymentRoutes)
 // Root endpoint for testing
 app.get('/', (req, res) => {
     res.send('Welcome to the login/signup API');

@@ -1,0 +1,102 @@
+/* AdminBookDetail.css */
+
+.book-detail {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f9f9f9; /* Light background for better contrast */
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000; /* Ensure it appears above other content */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+    width: 900px; /* Set a fixed width */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.detail-content {
+    display: flex; /* Use flexbox to align items */
+    width: 100%;
+}
+
+.book-image {
+    width: 300px; /* Adjust the width of the image */
+    height: auto;
+    margin-right: 20px; /* Space between image and details */
+    border-radius: 4px; /* Rounded corners for the image */
+}
+
+.details {
+    flex: 1; /* Take up remaining space */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    max-height: 400px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+label {
+    font-weight: bold; /* Bold labels for better visibility */
+}
+
+.input-field, .textarea-field {
+    width: 100%; /* Full width of the container */
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Border for input fields */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Larger font size */
+}
+
+.textarea-field {
+    height: 100px; /* Fixed height for the textarea */
+    resize: vertical; /* Allow vertical resizing */
+}
+
+.save-button {
+    padding: 10px 15px; /* Padding for the button */
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Larger font size */
+}
+
+.save-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.add-button,
+.remove-button {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}

@@ -101,8 +101,46 @@
   .cart-back-to-shop:hover {
     text-decoration: underline;
   }
-  
-  /* Responsive Styles */
+.remove-from-cart-button {
+  padding: 10px 15px;
+  background-color: #28a745; /* A vibrant red color for a clear "remove" action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 150px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.remove-from-cart-button:hover {
+  background-color: #28a745; /* Slightly darker red for hover effect */
+  transform: scale(1.05); /* Adds a subtle scaling effect on hover */
+}
+
+.remove-from-cart-button:active {
+  background-color: #09ff00; /* Darkest shade for active state */
+  transform: scale(0.95); /* Slightly shrinks on click for feedback */
+}
+.cart-item-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cart-item-price {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.remove-from-cart-button {
+  align-self: flex-start; /* Ensures the button aligns to the left under the price */
+}
+
+
+/* Responsive Styles */
   @media screen and (max-width: 768px) {
     .cart-container {
       padding: 15px;

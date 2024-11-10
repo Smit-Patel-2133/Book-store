@@ -1,5 +1,5 @@
-// controllers/wishlistController.js
 const { connectToDatabase } = require('../config/database');
+const { ObjectId } = require('mongodb'); // Ensure ObjectId is imported
 
 async function addToWishlist(req, res) {
     const { userId, bookId } = req.body; // Extract userId and bookId from request body
@@ -36,7 +36,6 @@ async function addToWishlist(req, res) {
         res.status(500).send({ error: "An error occurred while adding to the wishlist." });
     }
 }
-
 
 async function removeFromWishlist(req, res) {
     const { userId, bookId } = req.body; // Extract userId and bookId from request body
@@ -79,4 +78,46 @@ async function getWishlistItems(req, res) {
     }
 }
 
-module.exports = { addToWishlist, getWishlistItems, removeFromWishlist };
+async function getWishlistBooks(req, res) {
+    const { userId } = req.query; // Retrieve userId from query parameters
+    try {
+        const db = await connectToDatabase();
+        const wishlistCollection = db.collection('wishlist');
+        const bookCollection = db.collection('books_info');
+
+        // Retrieve the wishlist for the user
+        const wishlist = await wishlistCollection.findOne({ userId });
+        console.log("Wishlist:", wishlist);
+
+        if (!wishlist) {
+            return res.status(404).send({ message: "Wishlist not found for this user." });
+        }
+
+        // Get the array of book IDs from the wishlist
+        const bookIds = wishlist.items;
+        console.log("ids:-", bookIds);
+
+        // Ensure bookIds are converted to ObjectId
+        const objectIds = bookIds.map(id => {
+            try {
+                return new ObjectId(id); // Convert each ID to ObjectId
+            } catch (error) {
+                console.error("Error converting string to ObjectId:", error);
+                return null; // Return null if conversion fails
+            }
+        }).filter(id => id !== null); // Filter out any null values
+        console.log("ids:-", objectIds);
+
+        // Fetch the books from the book_info collection that match the IDs in the wishlist
+        const books = await bookCollection.find({ _id: { $in: objectIds } }).toArray();
+        console.log("Books found:", books);
+
+        // Return the books as JSON response
+        res.status(200).json(books);
+    } catch (error) {
+        console.error("Error fetching wishlist books:", error);
+        res.status(500).send({ error: "An error occurred while fetching the wishlist books." });
+    }
+}
+
+module.exports = { addToWishlist, getWishlistItems, removeFromWishlist, getWishlistBooks };

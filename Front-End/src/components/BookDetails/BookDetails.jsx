@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './BookDetail.css';
 import NavigationBar from '../NavigationBar/NavigationBar.jsx';
@@ -43,7 +43,7 @@ const BookDetail = () => {
     const discountedPrice = originalPrice * (1 - discountPercentage); // Calculate the discounted price
 
     // State to manage image scaling
-    const [imageScale, setImageScale] = useState(1); // Initialize imageScale state
+    const [imageScale, setImageScale] = useState(1);
     // State to manage description visibility
     const [showFullDescription, setShowFullDescription] = useState(false);
 
@@ -92,7 +92,6 @@ const BookDetail = () => {
     };
 
     const isInCart = cartItems.some(item => item.bookId === book._id);
-    console.log("Is In Cart:", isInCart);
 
     // Function to handle adding/removing from wishlist
     const handleWishlistToggle = async () => {
@@ -128,7 +127,6 @@ const BookDetail = () => {
     };
 
     const isInWishlist = wishlistItems.some(item => item.id === book._id);
-    console.log("Is In Wishlist:", isInWishlist);
 
     return (
         <>

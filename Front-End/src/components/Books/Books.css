@@ -52,8 +52,10 @@ body {
     padding: 10px 15px;
     background-color: #68ae0b;
     border: none;
+    display: flex;
     border-radius: 0 5px 5px 0;
     color: white;
+    height: 40px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
@@ -62,6 +64,7 @@ body {
 .search-button:hover {
     background-color: #58a504;
 }
+
 
 .search-button:disabled {
     background-color: #ccc;
@@ -190,4 +193,78 @@ body {
 
 .pagination .active {
     background-color: #5a992c;
+}
+/* Category Button */
+.category-button {
+    padding: 10px 20px;
+    background-color: #68ae0b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.category-button:hover {
+    background-color: #58a504;
+}
+
+/* Category List */
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.category-item {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease;
+}
+
+.category-item:hover {
+    background-color: #e1e1e1;
+}
+
+.category-item.active {
+    background-color: #68ae0b;
+    color: white;
+    border-color: #58a504;
+}
+/* Wraps the category button, list, and search bar */
+.header-group {
+    display: flex;
+    flex-direction: column; /* Change to column to stack items */
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* Make the category button and search bar appear in a row */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+/* Display the category list below the search bar */
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

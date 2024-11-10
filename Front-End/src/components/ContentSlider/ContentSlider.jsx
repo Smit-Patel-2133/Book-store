@@ -86,7 +86,7 @@ const ContentSlider = ({ products, name }) => {
               const finalPrice = currentPrice - discountAmount;
 
               return (
-                  <div key={product.id || product._id} className="product-card" onClick={() => handleBookClick(product)}>
+                  <div key={product.id || product._id} className="product-card" >
                     <img
                         src={product.coverImg || 'default-image.jpg'}
                         alt={product.title || 'No Title'}
@@ -99,10 +99,7 @@ const ContentSlider = ({ products, name }) => {
                           <span className="discount-price">Rs. {currentPrice.toFixed(2)}</span>
                       )}
                     </div>
-                    <div className="product-icons">
-                      <i className="fas fa-shopping-bag"></i>
-                      <i className="fas fa-heart"></i>
-                    </div>
+                    <button onClick={() => handleBookClick(product)}> View Details</button>
                   </div>
               );
             })}

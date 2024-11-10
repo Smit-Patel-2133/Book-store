@@ -1,7 +1,7 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config(); // Ensure to load environment variables
 
-const mongoURI = process.env.MONGO_URI ||"mongodb+srv://smit02042004:TObFfwtBpduoy170@authentication.nrgs5.mongodb.net/?retryWrites=true&w=majority&appName=Authentication";
+const mongoURI = process.env.MONGO_URI ;
 const client = new MongoClient(mongoURI, {
     serverApi: {
         version: ServerApiVersion.v1,

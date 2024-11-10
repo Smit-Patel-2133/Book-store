@@ -5,10 +5,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import pi from "../../assets/images/login/loginpage.png";
 import logo from "../../assets/images/logo/img.png";
 import { currentUser } from '../../features/authentication/auth.js'; // Adjust the import path
+import { MdShoppingCart } from "react-icons/md";
+import { FaHeart } from "react-icons/fa"; // Import heart icon
 
 const NavigationBar = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user_info.auth); // Access user info from Redux state
+    const cartItems = useSelector(state => state.cart?.items?.length || 0); // Check if cart.items exists, default to 0
+    const wishlistItems = useSelector(state => state.wishlist?.wishlistItems?.length || 0); // Check if wishlist.items exists, default to 0
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [profilePicture, setProfilePicture] = useState(pi); // Default to a placeholder image
@@ -19,7 +23,7 @@ const NavigationBar = () => {
     };
 
     useEffect(() => {
-        if (user.profilePicture) {
+        if (user?.profilePicture) {
             const loadProfilePicture = async () => {
                 try {
                     const profPic = await import(`../../assets/images/profile/${user.profilePicture}.png`);
@@ -28,14 +32,13 @@ const NavigationBar = () => {
                     console.error("Error loading profile picture:", error);
                     setProfilePicture(pi); // Fallback to the placeholder image
                 }
-            }
+            };
             loadProfilePicture();
         } else {
             setProfilePicture(pi); // Fallback if no profile picture is set
         }
-    }, [user.profilePicture]);
+    }, [user?.profilePicture]);
 
-    // Check session storage on component mount
     useEffect(() => {
         const storedUser = sessionStorage.getItem('user');
         if (storedUser) {
@@ -51,13 +54,9 @@ const NavigationBar = () => {
     }, [dispatch]);
 
     const logout = () => {
-        // Clear session storage
         sessionStorage.removeItem('user');
-        // Clear local storage (if you're storing user data here)
-        localStorage.removeItem('user'); // Ensure this matches the key used to store user data in localStorage
-        // Clear Redux state
+        localStorage.removeItem('user');
         dispatch(currentUser({ name: '', email: '', isLogedin: false, profilePicture: null }));
-        // Redirect to login page
         navigate('/home_page');
     };
 
@@ -68,7 +67,6 @@ const NavigationBar = () => {
             </div>
 
             {!isMobile ? (
-                // For laptop/tablet screens
                 <>
                     <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
                         <li><NavLink to="/home_page" exact>Home</NavLink></li>
@@ -81,14 +79,25 @@ const NavigationBar = () => {
 
                     <div className="nav-icons">
                         {user.isLogedin ? (
-                            <div className="profile-wrapper">
-                                <img src={profilePicture} className="profile-pic" alt="Profile" onClick={toggleMenu} />
-                                {isMenuOpen && (
-                                    <div className="dropdown-menu">
-                                        <button onClick={() => navigate("/userProfile")}>Profile</button>
-                                        <button onClick={logout}>Logout</button>
-                                    </div>
-                                )}
+                            <div className="user-section">
+                                <div className="icon-wrapper" onClick={() => navigate('/cart')}>
+                                    <MdShoppingCart className="icon" />
+                                    <span className="badge">{cartItems}</span> {/* Display cart count */}
+                                </div>
+                                <div className="icon-wrapper" onClick={() => navigate('/wishlist')}>
+                                    <FaHeart className="icon" />
+                                    <span className="badge">{wishlistItems}</span> {/* Display wishlist count */}
+                                </div>
+
+                                <div className="profile-wrapper">
+                                    <img src={profilePicture} className="profile-pic" alt="Profile" onClick={toggleMenu} />
+                                    {isMenuOpen && (
+                                        <div className="dropdown-menu">
+                                            <button onClick={() => navigate("/userProfile")}>Profile</button>
+                                            <button onClick={logout}>Logout</button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         ) : (
                             <div className="auth-buttons">
@@ -99,7 +108,6 @@ const NavigationBar = () => {
                     </div>
                 </>
             ) : (
-                // For mobile screens
                 <>
                     <div className="mobile-dropdown">
                         <button onClick={toggleMenu} className="dropdown-button">Menu</button>
@@ -110,7 +118,7 @@ const NavigationBar = () => {
                                 <button onClick={() => navigate("/blog")}>Blog</button>
                                 <button onClick={() => navigate("/contact")}>Contact</button>
                                 {user.isLogedin && <button onClick={() => navigate("/userProfile")}>Profile</button>}
-                                {user.email === 'makzadmin@makz.com' && <NavLink to="/admin">Dashboard</NavLink>}
+                                {user.email === 'stories@makz.com' && <NavLink to="/admin">Dashboard</NavLink>}
                                 {user.isLogedin ? (
                                     <button onClick={logout}>Logout</button>
                                 ) : (

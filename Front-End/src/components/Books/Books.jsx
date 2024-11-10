@@ -15,8 +15,23 @@ const Books = () => {
     const [booksData, setBooksData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [categories] = useState(['Fiction', 'Arts and Entertainment', 'Science and Technology', 'Non-Fiction', 'Business and Economics', 'Juvenile Fiction', 'Literary Collections', 'Biography & Autobiography', 'Philosophy and Religion', 'Juvenile Nonfiction', 'Poetry', 'Miscellaneous', 'Religion', 'Social Science', 'Comics & Graphic Novels', 'Drama']);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [categories] = useState([
+        "Fantasy", "Young Adult", "Fiction", "Magic", "Children's", "Adventure", "Audiobook", "Middle Grade", "Classics",
+        "Science Fiction Fantasy", "Romance", "Vampires", "Paranormal", "Paranormal Romance", "Supernatural", "Teen",
+        "Urban Fantasy", "Historical Fiction", "Historical", "War", "Holocaust", "World War II", "Books About Books",
+        "Dystopia", "Literature", "Politics", "School", "Science Fiction", "Novels", "Read For School", "Civil War",
+        "Historical Romance", "Picture Books", "Poetry", "Juvenile", "Kids", "Short Stories", "Gothic", "19th Century",
+        "Classic Literature", "British Literature", "Thriller", "Mystery", "Crime", "Horror", "Suspense", "Self-Help",
+        "Biography", "Autobiography", "Memoir", "Psychology", "Philosophy", "Religion", "Spirituality", "Travel", "Cooking",
+        "Health and Wellness", "Business", "Economics", "Entrepreneurship", "Technology", "Programming", "Graphic Novels",
+        "Comics", "Drama", "Essays", "Humor", "Anthology", "True Crime", "Contemporary", "Women's Fiction", "LGBTQ+",
+        "Family", "Friendship", "Parenting", "Nature", "Environment", "Science", "Astronomy", "Physics", "Mathematics",
+        "Engineering", "Art", "Photography", "Music", "Performing Arts", "Architecture", "Animals", "Gardening", "Sports",
+        "Fitness", "Hobbies", "Crafts", "Home Improvement", "Education", "Law", "Political Science"
+    ]);
+
+
+    const [selectedGenres, setSelectedGenres] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const booksPerPage = 20;
     const navigate = useNavigate();
@@ -24,14 +39,14 @@ const Books = () => {
 
     useEffect(() => {
         fetchBooks();
-    }, [selectedCategory]);
+    }, [selectedGenres, searchTerm]);
 
     const fetchBooks = async () => {
         setLoading(true);
         try {
             const response = await axios.get('http://localhost:3000/api/books', {
                 params: {
-                    category: selectedCategory || undefined,
+                    genres: selectedGenres.length ? selectedGenres : undefined,
                     search: searchTerm || undefined
                 }
             });
@@ -46,22 +61,23 @@ const Books = () => {
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
         setCurrentPage(1);
-        setSelectedCategory(''); // Clear category when searching
     };
 
-    const handleCategoryChange = (event) => {
-        setSelectedCategory(event.target.value);
+    const handleGenreChange = (genre) => {
+        setSelectedGenres((prevSelectedGenres) =>
+            prevSelectedGenres.includes(genre)
+                ? prevSelectedGenres.filter((g) => g !== genre)
+                : [...prevSelectedGenres, genre]
+        );
         setCurrentPage(1);
     };
 
     const handleSearch = async () => {
-        if (!searchTerm) return; // Prevent search if input is empty
+        if (!searchTerm) return;
         setLoading(true);
         try {
             const response = await axios.get('http://localhost:5000/rec', {
-                params: {
-                    name: searchTerm
-                }
+                params: { name: searchTerm }
             });
             setBooksData(response.data);
         } catch (err) {
@@ -80,7 +96,9 @@ const Books = () => {
     }
 
     const filteredBooks = booksData.filter((book) =>
-        (selectedCategory ? book.categories.includes(selectedCategory) : true)
+        selectedGenres.length
+            ? selectedGenres.some((genre) => book.genres.includes(genre))
+            : true
     );
 
     const indexOfLastBook = currentPage * booksPerPage;
@@ -88,15 +106,15 @@ const Books = () => {
     const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
 
     const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
-    // console.log("currentBooks",currentBooks)
+
     return (
         <>
             <NavigationBar />
             <div className="main-container">
                 <SearchBar
-                    categories={categories}
-                    selectedCategory={selectedCategory}
-                    onCategoryChange={handleCategoryChange}
+                    genres={categories}
+                    selectedGenres={selectedGenres}
+                    onGenreChange={handleGenreChange}
                     searchTerm={searchTerm}
                     onSearchChange={handleSearchChange}
                     onSearch={handleSearch}
