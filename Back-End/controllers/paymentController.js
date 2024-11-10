@@ -69,7 +69,6 @@
     };
 
 
-
     module.exports = {
         getSessionId,
         verifyPayment
