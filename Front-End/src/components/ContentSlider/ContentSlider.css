@@ -85,6 +85,40 @@
   max-width: 150px; /* Adjust this width as necessary */
 }
 
+/* Product details container */
+.product-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;  /* Adjust margin for spacing above the button */
+}
+
+/* View Details button styling */
+.view-details-button {
+  padding: 10px 20px;  /* Adjust padding for button size */
+  background-color: #28a745;  /* Green background */
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;  /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+}
+
+.view-details-button:hover {
+  background-color: #218838;  /* Darker green on hover */
+  transform: translateY(-2px);  /* Subtle lift effect */
+}
+
+.view-details-button:focus {
+  outline: none;  /* Removes outline on focus */
+}
+
+.view-details-button:active {
+  transform: translateY(0);  /* Reset button to normal state when clicked */
+}
+
 
 .product-prices {
   display: flex;
