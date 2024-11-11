@@ -29,17 +29,18 @@ const Books = () => {
         "Engineering", "Art", "Photography", "Music", "Performing Arts", "Architecture", "Animals", "Gardening", "Sports",
         "Fitness", "Hobbies", "Crafts", "Home Improvement", "Education", "Law", "Political Science"
     ]);
-
-
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchTriggered, setSearchTriggered] = useState(false);
     const booksPerPage = 20;
     const navigate = useNavigate();
     const cart = useSelector(state => state.cart.cart);
 
     useEffect(() => {
-        fetchBooks();
-    }, [selectedGenres, searchTerm]);
+        if (!searchTriggered) {  // Only fetch books if no search was triggered
+            fetchBooks();
+        }
+    }, [selectedGenres]);
 
     const fetchBooks = async () => {
         setLoading(true);
@@ -60,7 +61,6 @@ const Books = () => {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
-        setCurrentPage(1);
     };
 
     const handleGenreChange = (genre) => {
@@ -79,10 +79,12 @@ const Books = () => {
             const response = await axios.get('http://localhost:5000/rec', {
                 params: { name: searchTerm }
             });
-            setBooksData(response.data);
+            setBooksData(response.data);  // Set recommendations as booksData
+            console.log("Updated booksData with recommendations:", response.data);
         } catch (err) {
             console.log(err);
         } finally {
+            setSearchTriggered(false);  // Reset search trigger after setting data
             setLoading(false);
         }
     };

@@ -111,71 +111,47 @@ const Checkout = () => {
     console.log("dfsj:-", cartItems)
     const verifyPayment = async (orderId) => {
         try {
-            console.log('Verifying payment with orderId:', orderId);
-
-            // Step 1: Send the verification request
             const res = await axios.post('http://localhost:3000/api/payment/verify', {orderId});
             const paymentData = res.data[0];
-
-            // Log the raw response data for troubleshooting
-            console.log('Payment verification response data:', res.data);
-
             if (!paymentData) {
                 console.error('Payment status not found in the response:', res.data);
                 navigate('/payment-status', {state: {status: 'failed'}});
                 return;
             }
-
-            // Step 2: Check the payment status
             const paymentStatus = paymentData.payment_status === 'SUCCESS' ? 'success' : 'failed';
-            console.log('Payment status:', paymentStatus);
-
-            // Step 3: Extract payment details
-            const orderAmount = parseFloat(paymentData.order_amount);
-            console.log('Order Amount:', orderAmount);
-
-            const paymentGroup = paymentData.payment_group;
-            console.log('Payment Group:', paymentGroup);
-
-            const paymentTime = new Date(paymentData.payment_time);
-            console.log('Payment Time:', paymentTime);
-
-            const orderID = paymentData.order_id;
-            console.log('Order ID:', orderID);
-
-            // Format date and time
-            const date = paymentTime.toISOString().split('T')[0];
-            const time = paymentTime.toISOString().split('T')[1].split('.')[0];
-            console.log('Formatted Date:', date);
-            console.log('Formatted Time:', time);
-            console.log("from inside:-",cartItems)
-            // Step 6: Log item details in cart (showing itemId and title from the cartItem)
-            const itemDetails = cartItems.map((item) => ({
-                itemId: item._id,
-                title:item.title
-            }));
-
-            // Log the details to verify the output
-            console.log('Cart Items with itemId and title:', itemDetails);
-
-            // Step 7: Construct payment information object
-            const paymentInfo = {
-                orderId: orderID,
-                orderAmount,
-                date,
-                time,
-                paymentMode: paymentGroup,
-                paymentStatus,
-                items: itemDetails,
-                userId
-            };
-            console.log('Payment Info:', paymentInfo);
-
-            // Step 8: Redirect based on payment status
             if (paymentStatus === 'failed') {
                 console.log('Payment failed, redirecting to payment status page with failed status');
                 navigate('/payment-status', {state: {status: paymentStatus}});
                 return;
+            }
+            const orderAmount = parseFloat(paymentData.order_amount);
+            const paymentGroup = paymentData.payment_group;
+            const paymentTime = new Date(paymentData.payment_time);
+            const orderID = paymentData.order_id;
+            const date = paymentTime.toISOString().split('T')[0];
+            const time = paymentTime.toISOString().split('T')[1].split('.')[0];
+            const itemDetails = cartItems.map((item) => ({
+                itemId: item._id,
+                title:item.title
+            }));
+            const paymentInfo = {
+                orderId: orderID,
+                orderAmount:orderAmount,
+                date:date,
+                time:time,
+                paymentMode: paymentGroup,
+                paymentStatus:paymentStatus,
+                items: itemDetails,
+                userId:userId
+            };
+
+            console.log('Payment Info:', paymentInfo.orderId);
+
+            try{
+                const res=await axios.post('http://localhost:3000/api/payment/order_details', {paymentInfo:paymentInfo})
+
+            }catch (e) {
+                console.log(e)
             }
 
             console.log('Payment successful, redirecting to payment status page with payment info');
@@ -205,7 +181,7 @@ const Checkout = () => {
 
 
         const { house_detail, areaDetail, landmark, pincode, city, state } = userData.address;
-
+        const number=userData.mobile
         const saveAddressRes = await axios.post('http://localhost:3000/api/checkout/saveAddress', {
             userid: user.email,
             house_detail,
@@ -213,7 +189,8 @@ const Checkout = () => {
             landmark,
             pincode,
             city,
-            state
+            state,
+            number: number
         });
         if (saveAddressRes.status !== 200) {
             console.error('Failed to save address');
@@ -254,8 +231,16 @@ const Checkout = () => {
                 {errors.name && <p className="error">{errors.name}</p>}
 
                 <label htmlFor="email">Email <span className="required">*</span></label>
-                <input type="email" name="email" value={userData.email} onChange={handleInputChange} required/>
+                <input
+                    type="email"
+                    name="email"
+                    value={userData.email}
+                    onChange={handleInputChange}
+                    required
+                    readOnly
+                />
                 {errors.email && <p className="error">{errors.email}</p>}
+
 
                 <label htmlFor="mobile">Mobile Number <span className="required">*</span></label>
                 <input type="text" name="mobile" value={userData.mobile} onChange={handleInputChange} required/>
@@ -294,7 +279,28 @@ const Checkout = () => {
             </div>
 
             <div className="checkout-summary">
-                <h3>Order Summary</h3>
+                <h3 className="item-details-header">Order Summary</h3>
+                <ul className="item-details-list">
+                    {cartItems.map((item, index) => {
+                        const discount = item.offer || 0;
+                        const price = parseFloat(item.price) || 0;
+                        const discountedPrice = price - (price * (discount / 100));
+                        return (
+                            <li key={index} className="item-detail">
+                                <div className="cart-item-part-one">
+                                    <img src={item.coverImg} alt={item.title} className="cart-item-image"/>
+                                </div>
+                                <div className="cart-item-part-two">
+                                    <span className="item-title">{item.title}</span>
+                                    <span className="item-original-price">Original Price: Rs.{price.toFixed(2)}</span>
+                                    <span className="item-discount">Discount: {discount}%</span>
+                                    <span
+                                        className="item-current-price">Current Price: Rs.{discountedPrice.toFixed(2)}</span>
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
                 <p>Total Price: ₹{totalPrice.toFixed(2)}</p>
                 <p>Delivery Charge: ₹{DELIVERY_CHARGE}</p>
                 <p>Grand Total: ₹{grandTotal.toFixed(2)}</p>

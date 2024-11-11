@@ -24,12 +24,12 @@ const getUserAddress = async (req, res) => {
     }
 };
 const saveAddress = async (req, res) => {
-    const { userid, house_detail, areaDetail, landmark, pincode, city, state } = req.body;
+    const { userid, house_detail, areaDetail, landmark, pincode, city, state,number } = req.body;
 
     console.log("Received data:", { userid, house_detail, areaDetail, landmark, pincode, city, state });
 
     // Validate the input data
-    if (!userid || !house_detail || !areaDetail || !landmark || !pincode || !city || !state) {
+    if (!userid || !house_detail || !areaDetail || !landmark || !pincode || !city || !state||!number) {
         return res.status(400).send({ message: 'All fields are required' });
     }
 
@@ -47,7 +47,8 @@ const saveAddress = async (req, res) => {
                         pincode,
                         city,
                         state
-                    }
+                    },
+                    mobileNumber: number
                 }} // set the address fields (add if not exists)
         );
 
