@@ -22,6 +22,7 @@ import Checkout from "./components/Checkout/Checkout.jsx";
 import PaymentStatus from "./components/Checkout/PaymentStatus.jsx";
 import DeliveryLogin from  "./components/Delivery Persion/Login/Login.jsx"
 import DeliverySignup from "./components/Delivery Persion/Login/Signup.jsx"
+import AdminOrder from "./components/Admin/component/AdminOrder.jsx";
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='' element={<App />}>
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
             <Route path="/adminLogin" element={<AdminLogin/>} />
             <Route path='/admindashboard' element={<Dashboard/>} />
             <Route path="/admindashboard/AdminBooksPage" element={<AdminBooksPage />} />
+            <Route path="/admindashboard/AdminOrderPage" element={<AdminOrder/>} />
             <Route path='/cart' element={<Cart/>} />
             <Route path='/wishlist' element={<Wishlist/>}/>
             <Route path='/Checkout' element={<Checkout/>}/>

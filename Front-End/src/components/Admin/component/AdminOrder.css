@@ -1,0 +1,58 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow: auto; /* Allow scrolling if content overflows */
+}
+
+.order-details {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.order-info,
+.address-info,
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.order-info td,
+.address-info td,
+.items-table td,
+.order-info th,
+.address-info th,
+.items-table th {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.order-info th,
+.address-info th,
+.items-table th {
+    background-color: #f4f4f4;
+}
+
+.items-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+/* Add a horizontal scrollbar at the bottom of the page if the content overflows */
+body {
+    overflow-x: auto;
+}
+
+/* For responsive handling */
+@media (max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+    }
+}

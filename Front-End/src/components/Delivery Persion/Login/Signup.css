@@ -81,3 +81,10 @@
         padding: 10px;
     }
 }
+.message-text {
+    margin-top: 20px;
+    font-size: 18px;
+    color: green; /* or red for error */
+    text-align: center;
+}
+
