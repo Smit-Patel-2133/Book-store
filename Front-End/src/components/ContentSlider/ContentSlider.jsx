@@ -99,7 +99,10 @@ const ContentSlider = ({ products, name }) => {
                           <span className="discount-price">Rs. {currentPrice.toFixed(2)}</span>
                       )}
                     </div>
-                    <button onClick={() => handleBookClick(product)}> View Details</button>
+                      <div className="product-details">
+                      <button className="view-details-button" onClick={() => handleBookClick(product)}> View Details</button>
+                      </div>
+      
                   </div>
               );
             })}

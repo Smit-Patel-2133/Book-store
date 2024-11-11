@@ -1,36 +1,36 @@
-.signup-container {
+/* .signup-container {
     display: flex;
     height: 100vh;
-    background-color: #ffbf00; /* Amber background */
+    background-color: #ffbf00; 
 }
 
 .signup-image, .signup-box {
-    flex: 1; /* Equal size for both sides */
+    flex: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
-    box-sizing: border-box; /* Ensure padding does not affect overall width */
+    box-sizing: border-box; 
 }
 
 .signup-image {
     background-color: #f5f5f5;
-    overflow: hidden; /* Ensure image does not overflow its container */
+    overflow: hidden; 
 }
 
 .signup-image img {
     width: 100%;
-    height: 100vh; /* Full viewport height */
-    object-fit: cover; /* Cover the area without stretching */
+    height: 100vh; 
+    object-fit: cover; 
 }
 
 .signup-box {
-    background-color: #fff; /* White background for the form */
+    background-color: #fff; 
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    flex-direction: column; /* Stack items vertically */
+    flex-direction: column; 
     position: relative;
     z-index: 1;
-    width: 100%; /* Ensure it takes full width available */
+    width: 100%; 
 }
 
 .signup-box h2 {
@@ -61,7 +61,7 @@
 .signup-button {
     padding: 0.75rem;
     width: 100%;
-    background-color: #ffbf00; /* Amber button */
+    background-color: #ffbf00; 
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -80,11 +80,11 @@
     }
 
     .signup-image {
-        display: none; /* Hide the image on smaller screens */
+        display: none; 
     }
 
     .signup-box {
-        background-image: url('../../assets/images/login/loginpage.png'); /* Replace with your signup image */
+        background-image: url('../../assets/images/login/loginpage.png'); 
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -101,8 +101,8 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-        z-index: -1; /* Place behind content */
+        background: rgba(0, 0, 0, 0.5); 
+        z-index: -1; 
     }
 
     .signup-box h2 {
@@ -115,7 +115,7 @@
         display: block;
         margin-bottom: 0.5rem;
         font-weight: bold;
-        color: #fff; /* White text for readability */
+        color: #fff; 
     }
 
     .input-group input {
@@ -124,16 +124,137 @@
         border: 1px solid #ccc;
         border-radius: 4px;
         font-size: 1rem;
-        color: #000; /* Black text for input fields */
-        background-color: #fff; /* White background for input fields */
+        color: #000; 
+        background-color: #fff; 
     }
 
     .signup-button {
-        background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+        background-color: rgba(0, 0, 0, 0.7); 
         color: white;
     }
 
     .signup-button:hover {
         background-color: #e5a800;
+    }
+} */
+
+
+/* Overall container for the signup page */
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    gap: 60px;  /* Adjusted to ensure better spacing */
+    
+    /* Background image styling */
+    background-image: url('https://wallpapercave.com/wp/wp2297883.jpg');  /* Replace with the path to your image */
+    background-size:cover;  /* Ensures the image covers the entire container */
+    background-position: center;  /* Keeps the image centered */
+    background-repeat: no-repeat;  /* Prevents repeating the image */
+}
+
+/* Box containing the form */
+.signup-box {
+    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px; /* Same width as the login box */
+}
+
+/* Title of the form */
+.signup-box h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px; /* Same font size as Login */
+}
+
+/* Input fields styling */
+.input-group {
+    margin-bottom: 20px;  /* Consistent spacing between inputs */
+}
+
+.input-group label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;  /* Added extra spacing between label and input */
+    display: block;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;  /* Same padding as in Login */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    transition: border-color 0.3s ease; /* Smooth transition for focus */
+}
+
+.input-group input:focus {
+    border-color: #28a745;
+    outline: none;
+}
+
+/* Sign up button styling */
+.asignup-button {
+    width: 100%;
+    padding: 14px;  /* Same padding as Login button */
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;  /* Spacing between input fields and button */
+    margin-bottom: 15px;
+}
+
+.asignup-button:hover {
+    background-color: #218838;
+}
+
+/* Signup link styling (login link) */
+.signup-link {
+    font-size: 16px;  /* Same font size as the Login button */
+    color: #28a745;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    margin-top: 20px;  /* Spacing between Sign Up and Login link */
+    text-align: center;  /* Centers the link below the form */
+}
+
+.signup-link:hover {
+    color: #218838;
+}
+
+/* Image section */
+.signup-image img {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;  /* Ensures image fills the space without distortion */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .signup-container {
+        flex-direction: column;
+        gap: 40px;  /* Reduced gap for smaller screens */
+    }
+
+    .signup-box {
+        max-width: 90%;  /* Adjusts the width for smaller devices */
+    }
+
+    .signup-image img {
+        max-width: 100%;
     }
 }

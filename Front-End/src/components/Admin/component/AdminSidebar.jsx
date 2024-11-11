@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaChartLine, FaBook, FaShoppingCart, FaUserCog } from 'react-icons/fa';
+
 import { useNavigate } from "react-router-dom"; // Import icons
 
 const Sidebar = ({ orders }) => { // Receive orders as props
