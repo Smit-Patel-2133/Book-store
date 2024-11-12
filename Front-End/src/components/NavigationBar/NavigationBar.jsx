@@ -93,7 +93,7 @@ const NavigationBar = () => {
                                     <img src={profilePicture} className="profile-pic" alt="Profile" onClick={toggleMenu} />
                                     {isMenuOpen && (
                                         <div className="dropdown-menu">
-                                            <button onClick={() => navigate("/userProfile")}>Profile</button>
+                                            {/*<button onClick={() => navigate("/userProfile")}>Profile</button>*/}
                                             <button onClick={logout}>Logout</button>
                                         </div>
                                     )}

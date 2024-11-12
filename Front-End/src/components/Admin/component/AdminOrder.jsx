@@ -34,94 +34,43 @@ const AdminOrder = () => {
                     {orderDetails.map((order, index) => (
                         <div key={index} className="order-row">
                             <h3>Order Information</h3>
-                            <table className="order-info">
-                                <tbody>
-                                <tr>
-                                    <td><strong>Order ID:</strong></td>
-                                    <td>{order.orderId}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Order Amount:</strong></td>
-                                    <td>{order.orderAmount}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Order Date:</strong></td>
-                                    <td>{new Date(order.date).toLocaleDateString()}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Order Time:</strong></td>
-                                    <td>{order.time}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Payment Mode:</strong></td>
-                                    <td>{order.paymentMode}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Payment Status:</strong></td>
-                                    <td>{order.paymentStatus}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <div className="order-info-container">
+                                <div className="order-info">
+                                    <span><strong>Order ID:</strong> {order.orderId}</span>
+                                    <span><strong>Order Amount:</strong> {order.orderAmount}</span>
+                                    <span><strong>Order Date:</strong> {new Date(order.date).toLocaleDateString()}</span>
+                                    <span><strong>Order Time:</strong> {order.time}</span>
+                                    <span><strong>Payment Mode:</strong> {order.paymentMode}</span>
+                                    <span><strong>Payment Status:</strong> {order.paymentStatus}</span>
+                                </div>
+                            </div>
 
                             <h3>Items</h3>
                             <div className="items-container">
-                                <table className="items-table">
-                                    <thead>
-                                    <tr>
-                                        <th>Item ID</th>
-                                        <th>Title</th>
-                                        <th>User ID</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {order.items?.map((item, itemIndex) => (
-                                        <tr key={itemIndex}>
-                                            <td>{item.itemId}</td>
-                                            <td>{item.title}</td>
-                                            <td>{item.userId}</td>
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
+                                {order.items?.map((item, itemIndex) => (
+                                    <div key={itemIndex} className="item-info">
+                                        <span><strong>Item ID:</strong> {item.itemId}</span>
+                                        <span><strong>Title:</strong> {item.title}</span>
+
+                                    </div>
+                                ))}
+                                <span><strong>User ID:</strong> {order.userId}</span>
                             </div>
 
                             <h3>Delivery Address</h3>
-                            <table className="address-info">
-                                <tbody>
-                                <tr>
-                                    <td><strong>House Detail:</strong></td>
-                                    <td>{order.address.house_detail}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Area Detail:</strong></td>
-                                    <td>{order.address.areaDetail}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Landmark:</strong></td>
-                                    <td>{order.address.landmark}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Pincode:</strong></td>
-                                    <td>{order.address.pincode}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>City:</strong></td>
-                                    <td>{order.address.city}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>State:</strong></td>
-                                    <td>{order.address.state}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Mobile Number:</strong></td>
-                                    <td>{order.address.mobileNumber}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Status:</strong></td>
-                                    <td>{order.address.status}</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <div className="address-info-container">
+                                <div className="address-info">
+                                    {order.address.house_detail}
+                                    , {order.address.areaDetail},
+                                    {order.address.landmark},
+                                    {order.address.pincode},
+                                    {order.address.city},
+                                    {order.address.state},
+                                    {order.address.mobileNumber},
+
+                                </div>
+                                <span><strong>Status:</strong> {order.status}</span>
+                            </div>
                         </div>
                     ))}
                 </div>

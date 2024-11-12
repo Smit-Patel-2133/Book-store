@@ -1,58 +1,38 @@
-.dashboard {
+.order-info-container,
+.items-container,
+.address-info-container {
     display: flex;
-    min-height: 100vh;
-}
-
-.main-content {
-    flex: 1;
-    padding: 20px;
-    overflow: auto; /* Allow scrolling if content overflows */
-}
-
-.order-details {
-    max-width: 100%;
-    overflow-x: auto;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .order-info,
-.address-info,
-.items-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+.item-info,
+.address-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 0;
 }
 
-.order-info td,
-.address-info td,
-.items-table td,
-.order-info th,
-.address-info th,
-.items-table th {
+h3 {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+span {
+    display: block;
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+.order-row {
+    margin-bottom: 30px;
     border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
+    padding: 15px;
+    border-radius: 5px;
 }
 
-.order-info th,
-.address-info th,
-.items-table th {
-    background-color: #f4f4f4;
-}
-
-.items-container {
-    max-height: 300px;
-    overflow-y: auto;
+.order-info-container {
     margin-bottom: 20px;
-}
-
-/* Add a horizontal scrollbar at the bottom of the page if the content overflows */
-body {
-    overflow-x: auto;
-}
-
-/* For responsive handling */
-@media (max-width: 768px) {
-    .dashboard {
-        flex-direction: column;
-    }
 }
