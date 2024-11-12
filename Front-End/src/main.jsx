@@ -23,6 +23,8 @@ import PaymentStatus from "./components/Checkout/PaymentStatus.jsx";
 import DeliveryLogin from  "./components/Delivery Persion/Login/Login.jsx"
 import DeliverySignup from "./components/Delivery Persion/Login/Signup.jsx"
 import AdminOrder from "./components/Admin/component/AdminOrder.jsx";
+import Contact from './components/Contact/contact.jsx';
+import ProfilePage from './components/Profile/ProfilePage.jsx';
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='' element={<App />}>
@@ -42,6 +44,10 @@ const router = createBrowserRouter(
             <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/DelivertPersionLogin"element={<DeliveryLogin/>}/>
             <Route path="/DelivertPersionSignup"element={<DeliverySignup/>}/>
+            <Route path="/contact"element={<Contact/>}/>
+            <Route path="/userprofile"element={<ProfilePage/>}/>
+
+
         </Route>
     )
 );
