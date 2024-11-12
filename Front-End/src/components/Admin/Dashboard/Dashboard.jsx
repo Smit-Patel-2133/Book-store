@@ -15,6 +15,7 @@ const Dashboard = () => {
             <div className="main-content">
                 <Header />
                 <Overview />
+
                 <ChartsSection />
             </div>
         </div>

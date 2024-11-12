@@ -90,10 +90,22 @@ const NavigationBar = () => {
                                 </div>
 
                                 <div className="profile-wrapper">
-                                    <img src={profilePicture} className="profile-pic" alt="Profile" onClick={toggleMenu} />
+                                    <img src={profilePicture} className="profile-pic" alt="Profile"
+                                         onClick={toggleMenu}/>
+
+                                    <style>
+                                        {`
+          .profile-pic {
+            height: 50px;
+            width: 50px;
+            border-radius: 100%;
+          }
+        `}
+                                    </style>
+
                                     {isMenuOpen && (
                                         <div className="dropdown-menu">
-                                            <button onClick={() => navigate("/userProfile")}>Profile</button>
+                                            {/*<button onClick={() => navigate("/userProfile")}>Profile</button>*/}
                                             <button onClick={logout}>Logout</button>
                                         </div>
                                     )}

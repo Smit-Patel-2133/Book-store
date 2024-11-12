@@ -12,6 +12,8 @@ const homeRoutes = require('./routes/homeRoutes');
 const adminRoutes=require('./routes/adminRoutes');
 const checkoutRoutes = require('./routes/checkoutRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const DeliveryRotes=require('./routes/DeliveryPersonRouters');
+const ProfileRoutes = require('./routes/ProfileRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -33,6 +35,8 @@ app.use('/api/homepage', homeRoutes);
 app.use('/api/admin', adminRoutes)
 app.use('/api/checkout',checkoutRoutes)
 app.use('/api/payment',paymentRoutes)
+app.use('/api/DeliveryPerson',DeliveryRotes)
+app.use('/api/profile',ProfileRoutes)
 // Root endpoint for testing
 app.get('/', (req, res) => {
     res.send('Welcome to the login/signup API');

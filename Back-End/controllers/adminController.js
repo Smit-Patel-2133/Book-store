@@ -47,6 +47,31 @@ async function updateBook(req, res) {
     }
 }
 
+async function getOrderDetail(req, res) {
+    try {
+        console.log("Fetching order details...");
+
+        // Connect to the database
+        const db = await connectToDatabase();
+        const collection = db.collection('order_details');
+
+        // Fetch all orders and convert the cursor to an array
+        const pendingOrders = await collection.find().toArray();
+
+        // If no orders are found, return a message
+        if (pendingOrders.length === 0) {
+            return res.status(404).json({ message: "No pending orders found." });
+        }
+
+        // Send the found orders as a response
+        return res.status(200).json(pendingOrders);
+
+    } catch (e) {
+        console.error("Error fetching order details:", e);
+        return res.status(500).json({ message: "Internal server error." });
+    }
+}
 
 
-module.exports = { getBooks, updateBook };
+
+module.exports = { getBooks, updateBook,getOrderDetail };

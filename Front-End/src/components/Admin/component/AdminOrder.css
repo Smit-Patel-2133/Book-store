@@ -1,0 +1,38 @@
+.order-info-container,
+.items-container,
+.address-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.order-info,
+.item-info,
+.address-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+h3 {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+span {
+    display: block;
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+.order-row {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.order-info-container {
+    margin-bottom: 20px;
+}
