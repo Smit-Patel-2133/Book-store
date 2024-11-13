@@ -26,8 +26,8 @@ const Books = () => {
         "Health and Wellness", "Business", "Economics", "Entrepreneurship", "Technology", "Programming", "Graphic Novels",
         "Comics", "Drama", "Essays", "Humor", "Anthology", "True Crime", "Contemporary", "Women's Fiction", "LGBTQ+",
         "Family", "Friendship", "Parenting", "Nature", "Environment", "Science", "Astronomy", "Physics", "Mathematics",
-        "Engineering", "Art", "Photography", "Music", "Performing Arts", "Architecture", "Animals", "Gardening", "Sports",
-        "Fitness", "Hobbies", "Crafts", "Home Improvement", "Education", "Law", "Political Science"
+        "Engineering", "Art", "Photography", "Music", "Performing Arts", "Architecture", "Animals", "Gardening", "Sports","Poetry",
+        "Fitness", "Hobbies", "Crafts", "Home Improvement", "Education", "Law", "Political Science","Non-Fiction","History","Business and Economics","Literary Collections",
     ]);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');

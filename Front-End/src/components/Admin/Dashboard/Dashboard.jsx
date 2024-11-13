@@ -11,10 +11,15 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <Sidebar books={books} /> {/* Pass books to Sidebar */}
+            <Sidebar books={books}/> {/* Pass books to Sidebar */}
+
             <div className="main-content">
-                <Header />
-                <Overview />
+                <h1>Welcome</h1>
+
+                <Header/>
+                <Overview/>
+
+
 
                 <ChartsSection />
             </div>
