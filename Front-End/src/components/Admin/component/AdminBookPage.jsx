@@ -1,44 +1,42 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AdminSidebar from './AdminSidebar';
 import './AdminBookPage.css';
-import { BooksContext } from '../context/BooksContext.jsx'; // Import the context
-import BookDetail from './AdminBookDetail.jsx'; // Import the new component
+import { BooksContext } from '../context/BooksContext.jsx';
+import BookDetail from './AdminBookDetail.jsx';
+import { FaPlus } from 'react-icons/fa';
+import AddBookModal from './AddBookModal.jsx';
 
 const AdminBookPage = () => {
-    const { books } = useContext(BooksContext); // Access books from context
-    const [bookData, setBookData] = useState([]); // Editable book data
-    const [searchTerm, setSearchTerm] = useState(''); // Search term for book title
-    const [selectedBook, setSelectedBook] = useState(null); // Selected book for editing
-    console.log("sdfasdferw :- ",books[0])
-    // Update bookData whenever books change
+    const { books } = useContext(BooksContext);
+    const [bookData, setBookData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedBook, setSelectedBook] = useState(null);
+    const [showAddBookModal, setShowAddBookModal] = useState(false);
+
+    const handleAddBook = () => {
+        setShowAddBookModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowAddBookModal(false);
+        setSelectedBook(null);
+    };
+
+    const handleBookAdded = (newBook) => {
+        setBookData((prevBooks) => [...prevBooks, newBook]);
+        setShowAddBookModal(false);
+    };
+
     useEffect(() => {
         setBookData(books);
     }, [books]);
 
-    // Handler to update the editable fields
-    const handleInputChange = (index, event) => {
-        const { name, value } = event.target;
-        const updatedBooks = [...bookData];
-        updatedBooks[index] = {
-            ...updatedBooks[index],
-            [name]: value,
-        };
-        setBookData(updatedBooks);
-    };
-
-    // Filter books by title based on the search term
     const filteredBooks = bookData.filter((book) =>
         book.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Handle edit button click
     const handleEditClick = (book) => {
         setSelectedBook(book);
-    };
-
-    // Handle close detail view
-    const handleClose = () => {
-        setSelectedBook(null);
     };
 
     return (
@@ -46,8 +44,18 @@ const AdminBookPage = () => {
             <AdminSidebar />
             <div className="main-content">
                 <h1>Manage Books</h1>
+                <button
+                    className="add-book-button"
+                    onClick={handleAddBook}
+                    aria-label="Add New Book"
+                >
+                    <FaPlus size={24} />
+                </button>
 
-                {/* Search Bar */}
+                {showAddBookModal && (
+                    <AddBookModal onClose={handleCloseModal} onBookAdded={handleBookAdded} />
+                )}
+
                 <input
                     type="text"
                     placeholder="Search by book title..."
@@ -56,7 +64,6 @@ const AdminBookPage = () => {
                     className="search-bar"
                 />
 
-                {/* Book List */}
                 {filteredBooks.length > 0 ? (
                     filteredBooks.map((book, index) => (
                         <div key={index} className="book-item">
@@ -68,9 +75,8 @@ const AdminBookPage = () => {
                     <p>No books available.</p>
                 )}
 
-                {/* Show Book Details if selected */}
                 {selectedBook && (
-                    <BookDetail book={selectedBook} onClose={handleClose} />
+                    <BookDetail book={selectedBook} onClose={handleCloseModal} />
                 )}
             </div>
         </div>

@@ -71,7 +71,59 @@ async function getOrderDetail(req, res) {
         return res.status(500).json({ message: "Internal server error." });
     }
 }
+async function addBook(req,res){
+    try{
+        console.log("adding")
+        const db = await connectToDatabase();
+        const collection = db.collection('books_info');
+        const add=await collection.insertOne(req.body);
+        console.log(add)
+        return res.status(200).json({ message: "book added" });
 
+    }catch (e) {
+        console.log(e)
+        return res.status(500).json({ error: 'Failed to add book' });
 
+    }
+}
+async function getOverview(req, res) {
+    try {
+        const db = await connectToDatabase();
 
-module.exports = { getBooks, updateBook,getOrderDetail };
+        // Total Users Count
+        const userCollection = db.collection('userInfo');
+        const totalUsers = await userCollection.countDocuments();
+
+        // New Users in the Last Week
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        const newUsers = await userCollection.countDocuments({
+            registeredAt: { $gte: oneWeekAgo }
+        });
+
+        // Total Books Count
+        const bookCollection = db.collection('books_info');
+        const totalBooks = await bookCollection.countDocuments();
+
+        // Total Sales
+        const orderCollection = db.collection('order_details');
+        const totalSalesData = await orderCollection.aggregate([
+            { $group: { _id: null, totalSales: { $sum: "$orderAmount" } } }
+        ]).toArray();
+        const totalSales = totalSalesData.length > 0 ? totalSalesData[0].totalSales : 0;
+        console.log(totalSales," ",totalUsers," ",newUsers,"  ",totalBooks)
+        // Return the statistics
+        res.status(200).json({
+            totalSales,
+            totalUsers,
+            newUsers,
+            totalBooks,
+            newBooks: 0 // No need to calculate newBooks as per your request
+        });
+    } catch (e) {
+        console.error("Error in getOverview:", e);
+        res.status(500).json({ error: "Failed to fetch overview data" });
+    }
+}
+
+module.exports = { getBooks, updateBook, getOrderDetail, addBook, getOverview };

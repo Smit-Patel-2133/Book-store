@@ -34,7 +34,7 @@ const Signup = () => {
                 const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData), SECRET_KEY).toString();
                 localStorage.setItem('user', encryptedData);
 
-                navigate('/home_page');
+                navigate('/login');
             }
         } catch (error) {
             console.error('Error registering user:', error);

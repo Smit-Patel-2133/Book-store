@@ -3,6 +3,6 @@ const { getuserInfo} = require("../controllers/ProfileController");
 
 const router = express.Router();
 
-router.post('/getuserInfo', getuserInfo);;  // Corrected route
+router.post('/userInfo', getuserInfo);
 
 module.exports = router;

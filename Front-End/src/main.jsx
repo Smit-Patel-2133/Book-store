@@ -44,8 +44,13 @@ const router = createBrowserRouter(
             <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/DelivertPersionLogin"element={<DeliveryLogin/>}/>
             <Route path="/DelivertPersionSignup"element={<DeliverySignup/>}/>
+<<<<<<< HEAD
             <Route path="/contact"element={<Contact/>}/>
             {/* <Route path="/userprofile"element={<ProfilePage/>}/> */}
+=======
+            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/userprofile" element={<ProfilePage/>}/>
+>>>>>>> d4c1e03f3c48c120d2e17090a44d8f6fe944df3e
 
 
         </Route>
