@@ -25,9 +25,11 @@ import DeliverySignup from "./components/Delivery Persion/Login/Signup.jsx"
 import AdminOrder from "./components/Admin/component/AdminOrder.jsx";
 import Contact from './components/Contact/contact.jsx';
 // import ProfilePage from './components/Profile/ProfilePage.jsx';
+
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='' element={<App />}>
+
+            <Route path='' element={<App />}>
             <Route path='/' element={<LandingPage/>} />
             <Route path='/home_page' element={<HomePage/>} />
             <Route path='/login' element={<Login />} />
@@ -44,16 +46,13 @@ const router = createBrowserRouter(
             <Route path="/payment-status" element={<PaymentStatus />} />
             <Route path="/DelivertPersionLogin"element={<DeliveryLogin/>}/>
             <Route path="/DelivertPersionSignup"element={<DeliverySignup/>}/>
-<<<<<<< HEAD
             <Route path="/contact"element={<Contact/>}/>
             {/* <Route path="/userprofile"element={<ProfilePage/>}/> */}
-=======
             <Route path="/contact" element={<Contact/>}/>
             <Route path="/userprofile" element={<ProfilePage/>}/>
->>>>>>> d4c1e03f3c48c120d2e17090a44d8f6fe944df3e
+            </Route>
 
-
-        </Route>
+        
     )
 );
 ReactDOM.createRoot(document.getElementById('root')).render(
