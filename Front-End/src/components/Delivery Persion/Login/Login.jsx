@@ -1,31 +1,43 @@
 import React, { useState } from 'react';
-import {NavLink, useNavigate} from 'react-router-dom';
-import './Login.css'; // Import the external CSS file
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { setDeliveryPerson } from '../../../features/DeliveryPerson/DeliverPerson.js';
+import './Login.css';
 
-const AdminLogin = () => {
-    const [username, setUsername] = useState('');
+const DeliveryPersonLogin = () => {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        console.log(email, "   ,   ", password);
+        try {
+            const response = await axios.post('http://localhost:3000/api/DeliveryPerson/Deliverylogin', {
+                email,
+                password,
+            });
 
-        // Predefined admin credentials
-        const adminUsername = 'admin@storys.com';
-        const adminPassword = 'admin@123';
-
-        if (username === adminUsername && password === adminPassword) {
-            // Navigate to the admin dashboard
-            navigate('/admindashboard');
-        } else {
-            // Set an error message if the credentials don't match
-            setErrorMessage('Invalid username or password');
+            // If login is successful, store user data in Redux and navigate
+            if (response.data.success) {
+                dispatch(setDeliveryPerson(response.data.user)); // Store user data in Redux
+                navigate('/deliveryDashboard');
+            } else {
+                setErrorMessage(response.data.message);
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            setErrorMessage(error.response?.data?.message || 'An error occurred. Please try again.');
         }
     };
-const handleSignup=()=>{
-    navigate('/DeliveryPersionSignup');
-}
+
+    const handleSignup = () => {
+        navigate('/DeliveryPersonSignup');
+    };
+
     return (
         <div className='admin-login-container'>
             <div className='admin-login-card'>
@@ -33,14 +45,14 @@ const handleSignup=()=>{
 
                 <form onSubmit={handleLogin}>
                     <div className='admin-login-input-group'>
-                        <label className='admin-login-label' htmlFor="username">Username</label>
+                        <label className='admin-login-label' htmlFor="email">Email</label>
                         <input
                             type="text"
-                            name="username"
-                            id="username"
-                            placeholder='username'
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            name="email"
+                            id="email"
+                            placeholder='Email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className='admin-login-input'
                         />
                     </div>
@@ -62,7 +74,7 @@ const handleSignup=()=>{
                             Login
                         </button>
                     </div>
-                    <NavLink onClick={handleSignup}>signup</NavLink>
+                    <NavLink onClick={handleSignup}>Sign up</NavLink>
                 </form>
 
                 <p className='admin-login-footer'>©2025 Book Store. All rights reserved.</p>
@@ -71,4 +83,4 @@ const handleSignup=()=>{
     );
 };
 
-export default AdminLogin;
+export default DeliveryPersonLogin;

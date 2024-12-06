@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Sidebar from '../component/AdminSidebar.jsx';
-import Header from '../component/AdminHeader.jsx';
-import Overview from '../component/AdminOverview.jsx';
-import ChartsSection from '../component/AdminChartsSection.jsx';
+import Header from '../component/Overview/AdminHeader.jsx';
+import Overview from '../component/Overview/AdminOverview.jsx';
+import ChartsSection from '../component/Overview/AdminChartsSection.jsx';
 import './Dashboard.css';
 import { BooksContext ,BooksProvider} from '../context/BooksContext.jsx'; // Import the context
 

@@ -19,8 +19,8 @@ const LandingPage = () => {
         <div>
             <HeroSection/>
             <CategoriesSection/>
-            <PopularBooks/>
-            <OffersBanners/>
+            {/*<PopularBooks/>*/}
+            {/*<OffersBanners/>*/}
             <Testimonials/>
             {/* <Cart/> */}
             <Footer/>

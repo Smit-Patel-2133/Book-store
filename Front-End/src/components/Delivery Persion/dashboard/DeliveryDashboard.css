@@ -1,0 +1,33 @@
+/* DeliveryDashboard.css */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.status-text {
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.pending {
+    color: orange;
+}
+
+.rejected {
+    color: red;
+}
+
+.approved {
+    color: green;
+}
+
+.status-message {
+    font-size: 1.5rem;
+    color: black;
+}

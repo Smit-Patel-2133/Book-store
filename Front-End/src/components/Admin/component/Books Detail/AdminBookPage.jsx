@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import AdminSidebar from './AdminSidebar';
+import AdminSidebar from '../AdminSidebar.jsx';
 import './AdminBookPage.css';
-import { BooksContext } from '../context/BooksContext.jsx';
+import { BooksContext } from '../../context/BooksContext.jsx';
 import BookDetail from './AdminBookDetail.jsx';
 import { FaPlus } from 'react-icons/fa';
 import AddBookModal from './AddBookModal.jsx';

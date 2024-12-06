@@ -125,5 +125,60 @@ async function getOverview(req, res) {
         res.status(500).json({ error: "Failed to fetch overview data" });
     }
 }
+async function getPendingDeliveryRequests(req, res) {
+    try {
+        const db = await connectToDatabase();
+        const collection = db.collection('deliveryPerson');
 
-module.exports = { getBooks, updateBook, getOrderDetail, addBook, getOverview };
+        // Fetch all records where status is 'Pending'
+        const pendingRequests = await collection.find({ status: "Pending" }).toArray();
+        // console.log("request",pendingRequests)
+        res.status(200).json(pendingRequests);
+    } catch (e) {
+        console.error("Error fetching pending delivery requests:", e);
+        res.status(500).json({ error: "An error occurred while fetching pending delivery requests." });
+    }
+}
+async function requestApprove(req, res) {
+    const { email } = req.body; // Use email instead of id
+    try {
+        const db = await connectToDatabase();
+        const collection = db.collection('deliveryPerson');
+        const updatedPerson = await collection.findOneAndUpdate(
+            { email: email }, // Match by email
+            { $set: { status: 'Approved' } },
+            { returnDocument: 'after' } // Return the updated document
+        );
+
+
+
+        res.json({ message: 'Delivery person approved successfully', updatedPerson: updatedPerson.value });
+    } catch (error) {
+        console.error('Error approving delivery person:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+async function requestReject(req, res) {
+    const { email } = req.body; // Use email instead of id
+    try {
+        const db = await connectToDatabase();
+        const collection = db.collection('deliveryPerson');
+        const updatedPerson = await collection.findOneAndUpdate(
+            { email: email }, // Match by email
+            { $set: { status: 'Rejected' } },
+            { returnDocument: 'after' } // Return the updated document
+        );
+
+
+
+        res.json({ message: 'Delivery person rejected successfully', updatedPerson: updatedPerson.value });
+    } catch (error) {
+        console.error('Error rejecting delivery person:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+
+module.exports = { getBooks, updateBook, getOrderDetail, addBook, getOverview,getPendingDeliveryRequests,requestApprove,requestReject };

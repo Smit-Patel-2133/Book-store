@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import './Signup.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Signup.css'; // Add your CSS file for styling
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -13,13 +13,17 @@ const Signup = () => {
         driverLicenseNumber: '',
         state: '',
         city: '',
-        pincode: ''
+        pincode: '',
+        password: '', // Add password field
+        confirmPassword: '' // Add confirm password field
     });
+
     const [errors, setErrors] = useState({
-        form: ''
+        form: '',
+        password: '' // Add password error state
     });
-    const [message, setMessage] = useState('');  // State to hold the message
-    const navigate = useNavigate(); // React Router's navigate function for redirection
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,36 +33,32 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check for missing fields
         const missingFields = Object.keys(formData).some(
             (key) => formData[key] === '' || formData[key] === null
         );
 
         if (missingFields) {
-            setErrors({ ...errors, form: 'All fields are required.' });
+            setErrors({ form: 'All fields are required.' });
+            return;
+        }
+
+        // Check if passwords match
+        if (formData.password !== formData.confirmPassword) {
+            setErrors({ ...errors, password: 'Passwords do not match.' });
             return;
         }
 
         try {
             const response = await axios.post('http://localhost:3000/api/deliveryPerson/register', formData);
-            console.log('Form data submitted successfully:', response.data);
 
-            if (response.data.message === 'Email is already registered.') {
-                // Set the message for already registered email
-                setMessage('Email is already registered. You will be redirected to the login page soon.');
-                setTimeout(() => {
-                    navigate('/deliveryPersonLogin'); // Redirect to login page after a delay
-                }, 4000);
-            } else {
-                // Set the message for successful registration
-                setMessage('Registration successful! You will be redirected to the login page soon.');
-                setTimeout(() => {
-                    navigate('/deliveryPersonLogin'); // Redirect to login page
-                }, 4000);
-            }
+            setMessage('Registration successful! You will be redirected to the login page soon.');
+            setTimeout(() => {
+                navigate('/DelivertPersionLogin');
+            }, 1000);
         } catch (error) {
             console.error('Error submitting form data:', error);
-            setMessage('An error occurred. Please try again.');
+            const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+            setMessage(errorMessage);
         }
     };
 
@@ -67,25 +67,43 @@ const Signup = () => {
             <h2 className="signup-title">Delivery Partner Signup</h2>
             <form className="signup-form" onSubmit={handleSubmit}>
                 <label className="signup-label">First Name:
-                    <input className="signup-input" type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                    <input
+                        className="signup-input"
+                        type="text"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                    />
                 </label>
                 <label className="signup-label">Last Name:
-                    <input className="signup-input" type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                    <input
+                        className="signup-input"
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                    />
                 </label>
                 <label className="signup-label">Email:
-                    <input className="signup-input" type="email" name="email" value={formData.email} onChange={handleChange} required />
+                    <input
+                        className="signup-input"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
                 </label>
                 <label className="signup-label">Mobile Number:
                     <input
                         className="signup-input"
-                        type="tel"
+                        type="text"
                         name="mobileNumber"
                         value={formData.mobileNumber}
                         onChange={handleChange}
                         required
-                        pattern="[0-9]{10}"
-                        maxLength="10"
-                        title="Please enter a 10-digit mobile number"
                     />
                 </label>
                 <label className="signup-label">Aadhaar Card Number:
@@ -96,12 +114,9 @@ const Signup = () => {
                         value={formData.adharCardNumber}
                         onChange={handleChange}
                         required
-                        pattern="[0-9]{12}"
-                        maxLength="12"
-                        title="Please enter a 12-digit Aadhaar number"
                     />
                 </label>
-                <label className="signup-label">Driver's License Number:
+                <label className="signup-label">Driver License Number:
                     <input
                         className="signup-input"
                         type="text"
@@ -109,15 +124,27 @@ const Signup = () => {
                         value={formData.driverLicenseNumber}
                         onChange={handleChange}
                         required
-                        maxLength="16"
-                        title="Please enter a 16-character driver's license number"
                     />
                 </label>
                 <label className="signup-label">State:
-                    <input className="signup-input" type="text" name="state" value={formData.state} onChange={handleChange} required />
+                    <input
+                        className="signup-input"
+                        type="text"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                        required
+                    />
                 </label>
                 <label className="signup-label">City:
-                    <input className="signup-input" type="text" name="city" value={formData.city} onChange={handleChange} required />
+                    <input
+                        className="signup-input"
+                        type="text"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                    />
                 </label>
                 <label className="signup-label">Pincode:
                     <input
@@ -127,16 +154,32 @@ const Signup = () => {
                         value={formData.pincode}
                         onChange={handleChange}
                         required
-                        pattern="[0-9]{6}"
-                        maxLength="6"
-                        title="Please enter a 6-digit pincode"
                     />
                 </label>
+                <label className="signup-label">Password:
+                    <input
+                        className="signup-input"
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label className="signup-label">Confirm Password:
+                    <input
+                        className="signup-input"
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                {errors.password && <p className="error-text">{errors.password}</p>}
                 {errors.form && <p className="error-text">{errors.form}</p>}
                 <button className="signup-button" type="submit">Submit Application</button>
             </form>
-
-            {/* Show the message based on the result */}
             {message && <p className="message-text">{message}</p>}
         </div>
     );

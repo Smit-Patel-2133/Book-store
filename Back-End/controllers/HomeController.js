@@ -23,7 +23,7 @@ async function getHomePageData(req, res) {
             .sort({ number_of_orders: -1 })
             .limit(10)
             .toArray();
-
+        console.log("bestSellers",bestSellers)
         // Send the response as JSON
         res.status(200).json({
             newArrivals,

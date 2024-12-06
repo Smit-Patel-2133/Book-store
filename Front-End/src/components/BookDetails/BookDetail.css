@@ -1,7 +1,7 @@
 /* Main container for the book detail */
 .book-detail-container {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: center;
     padding: 20px;
@@ -60,6 +60,11 @@
     color: #444;
     margin-bottom: 20px;
     line-height: 1.6;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Show up to 4 lines */
+    -webkit-box-orient: vertical;
 }
 
 /* Price and purchase section */
@@ -83,11 +88,17 @@
     text-decoration: line-through;
 }
 
-/* Add-to-cart section */
+.book-price .discounted-price {
+    font-size: 24px;
+    color: #b12704;
+}
+
+/* Add-to-cart and wishlist section */
 .action-buttons {
     margin-top: 15px;
     display: flex;
     flex-direction: column;
+    gap: 10px; /* Space between buttons */
 }
 
 .add-to-cart-btn,
@@ -95,12 +106,12 @@
     background-color: #4CAF50; /* Green background */
     color: white; /* White text */
     border: none; /* No borders */
-    padding: 12px; /* Some padding */
-    margin: 5px 0; /* Space between buttons */
-    cursor: pointer; /* Pointer cursor on hover */
+    padding: 12px 15px; /* Some padding */
     border-radius: 5px; /* Rounded corners */
     font-size: 18px; /* Larger text */
+    cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Smooth transition */
+    text-align: center;
 }
 
 .add-to-cart-btn:hover,
@@ -156,10 +167,75 @@
 
     .book-description {
         font-size: 14px;
+        -webkit-line-clamp: none; /* Remove line clamp for mobile */
     }
 
     .add-to-cart-btn,
     .add-to-wishlist-btn {
         width: 100%; /* Full width on mobile */
     }
+}
+
+/* Reviews section */
+.reviews-section {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.reviews-list .review-item {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.add-review {
+    margin-top: 10px;
+}
+
+.add-review textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.rating-number-input {
+    width: 40px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc; /* Default star color */
+}
+
+.star.filled {
+    color: gold; /* Color for filled stars */
+}
+
+.rating-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align to the left */
+}
+
+.rating-content {
+    display: flex;
+    align-items: center;
 }

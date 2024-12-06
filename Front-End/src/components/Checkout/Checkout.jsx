@@ -153,7 +153,15 @@ const Checkout = () => {
             }catch (e) {
                 console.log(e)
             }
-
+            //write code here
+            console.log("cart item after:- ",cartItems);
+            const bookIds = cartItems.map(item => item._id);
+            console.log("Book IDs: ", bookIds);
+            try{
+                const res=await axios.put('http://localhost:3000/api/payment/orderUpdate',{bookIds})
+            }catch (e) {
+                console.log(e)
+            }
             console.log('Payment successful, redirecting to payment status page with payment info');
             navigate('/payment-status', {state: {status: paymentStatus, paymentInfo}});
 

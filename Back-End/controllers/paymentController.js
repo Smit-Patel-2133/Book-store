@@ -2,6 +2,7 @@ const {connectToDatabase} = require('../config/database');
 const {Cashfree} = require('cashfree-pg');
 const {v4: uuidv4} = require('uuid'); // Import the uuid library
 require('dotenv').config();
+const { ObjectId } = require('mongodb');
 
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
@@ -124,10 +125,51 @@ const saveOrder = async (req, res) => {
     }
 };
 
+const orderUpdate = async (req, res) => {
+    const { bookIds } = req.body;
+    console.log("in back:-", bookIds);
+
+    if (!bookIds || !Array.isArray(bookIds)) {
+        return res.status(400).json({ success: false, message: "Invalid book IDs" });
+    }
+
+    try {
+        const db = await connectToDatabase();
+        const booksCollection = db.collection('books_info');
+
+        // Convert bookIds to ObjectId
+        const objectIds = bookIds.map(id => {
+            try {
+                return new ObjectId(id);
+            } catch (err) {
+                console.error(`Invalid ObjectId: ${id}`, err);
+                throw new Error(`Invalid ObjectId: ${id}`);
+            }
+        });
+
+        // Update the number_of_orders field for each book ID
+        const updatePromises = objectIds.map(async (bookId) => {
+            return booksCollection.updateOne(
+                { _id: bookId }, // Filter by _id
+                { $inc: { number_of_orders: 1 } } // Increment number_of_orders by 1
+            );
+        });
+
+        // Await all update operations
+        await Promise.all(updatePromises);
+
+        console.log("Books updated successfully:", objectIds);
+        res.status(200).json({ success: true, message: "Books updated successfully" });
+    } catch (error) {
+        console.error("Error updating books:", error);
+        res.status(500).json({ success: false, message: "Error updating books" });
+    }
+};
 
 
 module.exports = {
     getSessionId,
     verifyPayment,
-    saveOrder
+    saveOrder,
+    orderUpdate
 };
