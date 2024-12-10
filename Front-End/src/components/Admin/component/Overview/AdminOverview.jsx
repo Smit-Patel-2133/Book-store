@@ -8,6 +8,8 @@ const Overview = () => {
         newUsers: 0,
         totalBooks: 0,
         newBooks: 0,
+        pendingDeliveryRequests:0,
+        approvedDeliveryPersons:0,
     });
 
     useEffect(() => {
@@ -38,17 +40,23 @@ const Overview = () => {
                     <h3>New Users</h3>
                     <p>{stats.newUsers} User</p>
                 </div>
+
+
+            </div>
+            <div className="overview">
                 <div className="stat-box">
                     <h3>Total Books</h3>
                     <p>{stats.totalBooks} New</p>
                 </div>
+                <div className="stat-box">
+                    <h3>Total Delivery Person</h3>
+                    <p>{stats.approvedDeliveryPersons} </p>
+                </div>
+                <div className="stat-box">
+                    <h3>Delivery Person Request</h3>
+                    <p>{stats.pendingDeliveryRequests} </p>
+                </div>
             </div>
-            {/*<div className="overview">*/}
-            {/*    <div className="stat-box">*/}
-            {/*        <h3>New Books</h3>*/}
-            {/*        <p>{stats.newBooks} New</p>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </>
     );
 };

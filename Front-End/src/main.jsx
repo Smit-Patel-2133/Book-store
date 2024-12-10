@@ -27,10 +27,11 @@ import Contact from './components/Contact/contact.jsx';
 import ProfilePage from './components/Profile/ProfilePage.jsx';
 import DeliveryDashboard from "./components/Delivery Persion/dashboard/DeliveryDashboard.jsx";
 import AdminDeliveryPersonMangement from "./components/Admin/component/Delivery/AdminDeliveryPersonMangement.jsx";
+import AdminContactFromUser from "./components/Admin/component/Contact/AdminContactFromUser.jsx";
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='' element={<App />}>
-            <Route path='/' element={<LandingPage/>} />
+            <Route path='/' element={<HomePage/>} />
             <Route path='/home_page' element={<HomePage/>} />
             <Route path='/login' element={<Login />} />
             <Route path='/SignUp' element={<SignUp/>}/>
@@ -40,6 +41,9 @@ const router = createBrowserRouter(
             <Route path='/admindashboard' element={<Dashboard/>} />
             <Route path="/admindashboard/AdminBooksPage" element={<AdminBooksPage />} />
             <Route path="/admindashboard/AdminOrderPage" element={<AdminOrder/>} />
+            <Route path="/adminContactUser" element={<AdminContactFromUser />} />
+
+
             <Route path="/PersonRequest" element={<AdminDeliveryPersonMangement/>}/>
             <Route path='/cart' element={<Cart/>} />
             <Route path='/wishlist' element={<Wishlist/>}/>

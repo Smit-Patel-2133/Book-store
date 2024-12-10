@@ -1,80 +1,129 @@
-// Contact.jsx
-import React from 'react';
-import './Contact.css'; // You can separate the CSS into a file for better organization.
+import React, { useState } from 'react';
+import './Contact.css'; // Separate CSS for better organization.
 import Footer from "../Footer/Footer.jsx";
 import NavigationBar from '../NavigationBar/NavigationBar.jsx';
+import axios from "axios";
 
 const Contact = () => {
-  return (
-  <>
-    {/* <NavigationBar/> */}
-    <div className="container">
-      <div className="form">
-        <div className="contact-info">
-          <h3 className="title">Let's get in touch</h3>
-          <p className="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            dolorum adipisci recusandae praesentium dicta!
-          </p>
+    const [formData, setFormData] = useState({
+        email: '',
+        phone: '',
+        message: '',
+    });
 
-          <div className="info">
-            <div className="information">
-              <p>92 Cherry Drive Uniondale, NY 11553</p>
-            </div>
-            <div className="information">
-              <p>lorem@ipsum.com</p>
-            </div>
-            <div className="information">
-              <p>9999999999</p>
-            </div>
-          </div>
+    const [responseMessage, setResponseMessage] = useState('');
 
-          <div className="social-media">
-            
-            <br />
-            <div className="credit">
-              Made with <span style={{ color: 'tomato' }}>❤</span> by <a href="https://www.learningrobo.com/">Stories</a>
-            </div>
-          </div>
-        </div>
+    // Handle input changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-        <div className="contact-form">
-          <span className="circle one"></span>
-          <span className="circle two"></span>
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:3000/api/homepage/contact', formData);
+            if (response.status === 200) {
+                setResponseMessage('Your message has been sent successfully!');
+                setFormData({ email: '', phone: '', message: '' }); // Reset form
+            }
+        } catch (error) {
+            setResponseMessage(
+                error.response?.data?.message || 'Failed to send message. Please try again later.'
+            );
+        }
+    };
 
-          <form action="#" autoComplete="off">
-            <h3 className="title">Contact us</h3>
-            <div className="input-container">
-              <input type="text" name="name" className="input" />
-              <label htmlFor="name">Username</label>
-              <span>Username</span>
+    return (
+        <>
+            {/* Uncomment if NavigationBar is needed */}
+            {/* <NavigationBar /> */}
+            <div className="container">
+                <div className="form">
+                    <div className="contact-info">
+                        <h3 className="title">We’d Love to Hear From You</h3>
+                        <p className="text">
+                            Have questions about our books, recommendations, or any issues? Reach out to us, and we’ll
+                            get back to you soon!
+                        </p>
+
+                        <div className="info">
+                            <div className="information">
+                                <p>123 Book Lane, Readville, NY 12345</p>
+                            </div>
+                            <div className="information">
+                                <p>support@bookworld.com</p>
+                            </div>
+                            <div className="information">
+                                <p>+1 (800) 555-BOOK</p>
+                            </div>
+                        </div>
+
+                        <div className="social-media">
+                            <br/>
+                            <div className="credit">
+                                Made with <span style={{ color: 'tomato' }}>❤</span> by <a
+                                href="http://localhost:5173/">Stories</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="contact-form">
+                        <span className="circle one"></span>
+                        <span className="circle two"></span>
+
+                        <form onSubmit={handleSubmit} autoComplete="off">
+                            <h3 className="title">Contact Us</h3>
+
+                            <div className="input-container">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="input"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder=" "
+                                />
+                                <label htmlFor="email">Email Address</label>
+                            </div>
+                            <div className="input-container">
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    className="input"
+                                    required
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    placeholder=" "
+                                />
+                                <label htmlFor="phone">Phone Number</label>
+                            </div>
+                            <div className="input-container textarea">
+                            <textarea
+                                name="message"
+                                className="input"
+                                required
+                                value={formData.message}
+                                onChange={handleChange}
+                                placeholder=" "
+                            ></textarea>
+                                <label htmlFor="message">Your Message</label>
+                            </div>
+                            <input type="submit" value="Send Message" className="btn" />
+                        </form>
+
+                        {responseMessage && <p className="response-message">{responseMessage}</p>}
+                    </div>
+                </div>
             </div>
-            <div className="input-container">
-              <input type="email" name="email" className="input" />
-              <label htmlFor="email">Email</label>
-              <span>Email</span>
-            </div>
-            <div className="input-container">
-              <input type="tel" name="phone" className="input" />
-              <label htmlFor="phone">Phone</label>
-              <span>Phone</span>
-            </div>
-            <div className="input-container textarea">
-              <textarea name="message" className="input"></textarea>
-              <label htmlFor="message">Message</label>
-              <span>Message</span>
-            </div>
-            <input type="submit" value="Send" className="btn" />
-          </form>
-        </div>
-      </div>  
-      
-    </div>
-    <Footer/> 
-    
-    </>
-    
-  );
-}
+            <Footer />
+        </>
+    );
+};
 
 export default Contact;

@@ -18,10 +18,7 @@ const Dashboard = () => {
 
                 <Header/>
                 <Overview/>
-
-
-
-                <ChartsSection />
+                {/*<ChartsSection />*/}
             </div>
         </div>
     );

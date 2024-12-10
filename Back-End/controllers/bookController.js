@@ -89,7 +89,20 @@ async function reviews(req, res) {
     }
 }
 
+async function getReviews(req, res) {
+    const { bookId } = req.params; // Make sure this matches the route parameter
+    try {
+        const db = await connectToDatabase();
+        const reviewsCollection = db.collection('reviews');
 
+        // Find reviews for the specified bookId
+        const reviews = await reviewsCollection.find({ bookId }).toArray();
 
+        res.status(200).json(reviews);
+    } catch (error) {
+        console.error("Error fetching reviews:", error);
+        res.status(500).json({ message: "Error fetching reviews" });
+    }
+}
 
-module.exports = { getBooks, getHomePageData ,reviews};
+module.exports = { getBooks, getHomePageData, reviews, getReviews };

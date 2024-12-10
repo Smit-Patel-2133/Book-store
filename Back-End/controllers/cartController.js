@@ -71,4 +71,5 @@ async function getCartItemDetails(req, res) {
     }
 }
 
+
 module.exports = { addToCart, removeFromCart, getCartItems, getCartItemDetails };

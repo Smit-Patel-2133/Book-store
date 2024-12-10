@@ -36,3 +36,34 @@ span {
 .order-info-container {
     margin-bottom: 20px;
 }
+
+
+.dropdown-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.approve-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.approve-btn:hover {
+    background-color: #218838;
+}
+
+

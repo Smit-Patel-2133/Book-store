@@ -24,7 +24,7 @@ const Books = () => {
         "Classic Literature", "British Literature", "Thriller", "Mystery", "Crime", "Horror", "Suspense", "Self-Help",
         "Biography", "Autobiography", "Memoir", "Psychology", "Philosophy", "Religion", "Spirituality", "Travel", "Cooking",
         "Health and Wellness", "Business", "Economics", "Entrepreneurship", "Technology", "Programming", "Graphic Novels",
-        "Comics", "Drama", "Essays", "Humor", "Anthology", "True Crime", "Contemporary", "Women's Fiction", "LGBTQ+",
+        "Comics", "Drama", "Essays", "Humor", "Anthology", "True Crime", "Contemporary", "Women's Fiction",
         "Family", "Friendship", "Parenting", "Nature", "Environment", "Science", "Astronomy", "Physics", "Mathematics",
         "Engineering", "Art", "Photography", "Music", "Performing Arts", "Architecture", "Animals", "Gardening", "Sports","Poetry",
         "Fitness", "Hobbies", "Crafts", "Home Improvement", "Education", "Law", "Political Science","Non-Fiction","History","Business and Economics","Literary Collections",

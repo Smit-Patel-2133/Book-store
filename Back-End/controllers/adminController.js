@@ -49,21 +49,16 @@ async function updateBook(req, res) {
 
 async function getOrderDetail(req, res) {
     try {
-        console.log("Fetching order details...");
+        console.log("Fetching pending order details...");
 
         // Connect to the database
         const db = await connectToDatabase();
         const collection = db.collection('order_details');
 
-        // Fetch all orders and convert the cursor to an array
-        const pendingOrders = await collection.find().toArray();
+        // Fetch orders with status "Pending" and convert the cursor to an array
+        const pendingOrders = await collection.find({ status: "Pending" }).toArray();
 
-        // If no orders are found, return a message
-        if (pendingOrders.length === 0) {
-            return res.status(404).json({ message: "No pending orders found." });
-        }
-
-        // Send the found orders as a response
+        // Return an empty array if no pending orders are found
         return res.status(200).json(pendingOrders);
 
     } catch (e) {
@@ -71,6 +66,7 @@ async function getOrderDetail(req, res) {
         return res.status(500).json({ message: "Internal server error." });
     }
 }
+
 async function addBook(req,res){
     try{
         console.log("adding")
@@ -111,20 +107,44 @@ async function getOverview(req, res) {
             { $group: { _id: null, totalSales: { $sum: "$orderAmount" } } }
         ]).toArray();
         const totalSales = totalSalesData.length > 0 ? totalSalesData[0].totalSales : 0;
-        console.log(totalSales," ",totalUsers," ",newUsers,"  ",totalBooks)
+
+        // Delivery Person Requests (Pending)
+        const deliveryPersonCollection = db.collection('deliveryPerson');
+        const pendingDeliveryRequests = await deliveryPersonCollection.countDocuments({
+            status: "Pending"
+        });
+
+        // Approved Delivery Persons
+        const approvedDeliveryPersons = await deliveryPersonCollection.countDocuments({
+            status: "Approved"
+        });
+
+        // Log statistics for debugging
+        console.log(
+            totalSales,
+            totalUsers,
+            newUsers,
+            totalBooks,
+            pendingDeliveryRequests,
+            approvedDeliveryPersons
+        );
+
         // Return the statistics
         res.status(200).json({
             totalSales,
             totalUsers,
             newUsers,
             totalBooks,
-            newBooks: 0 // No need to calculate newBooks as per your request
+            newBooks: 0, // Placeholder if needed later
+            pendingDeliveryRequests,
+            approvedDeliveryPersons
         });
     } catch (e) {
         console.error("Error in getOverview:", e);
         res.status(500).json({ error: "Failed to fetch overview data" });
     }
 }
+
 async function getPendingDeliveryRequests(req, res) {
     try {
         const db = await connectToDatabase();
@@ -179,6 +199,73 @@ async function requestReject(req, res) {
     }
 }
 
+async function getDeliveryPerson(req, res) {
+    try {
+        console.log("i am hera");
+        const db = await connectToDatabase();
+        const collection = db.collection('deliveryPerson');
+
+        // Fetch the documents as an array
+        const deliveryPersons = await collection
+            .find(
+                { status: 'Approved' },
+                { projection: { firstName: 1, lastName: 1, city: 1, pincode: 1,email:1, _id: 0 } } // Project only specific fields
+            )
+            .toArray();
+
+        // Send the array as a JSON response
+        res.status(200).json(deliveryPersons);
+    } catch (e) {
+        console.error('Error fetching delivery persons:', e);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}
+async function orderApprove(req, res) {
+    try {
+        console.log("i am there ")
+        const { orderId, email } = req.body; // Extract orderId and email from the request body
+        const db = await connectToDatabase(); // Connect to the database
+
+        const deliveryPersonCollection = db.collection('deliveryPerson');
+        const orderDetailsCollection = db.collection('order_details');
+
+        // Fetch delivery person details using email
+        const deliveryPerson = await deliveryPersonCollection.findOne({ email });
+
+        if (!deliveryPerson) {
+            console.log("2")
+            return res.status(404).json({ error: 'Delivery person not found' });
+        }
+
+        const { firstName, lastName, mobileNumber } = deliveryPerson;
+
+        // Update the order_details collection
+        const result = await orderDetailsCollection.updateOne(
+            { orderId }, // Match the orderId
+            {
+                $set: {
+                    deliveryFirstName: firstName,
+                    deliveryLastName: lastName,
+                    deliveryMobileNumber: mobileNumber,
+                    deliveryEmail:email,
+                    status: 'Dispatched', // Update the status
+                },
+            }
+        );
+        console.log(result);
+        if (result.modifiedCount === 0) {
+            console.log("3")
+            return res.status(404).json({ error: 'Order not found or not updated' });
+        }
+
+        res.status(200).json({ message: 'Order approved and updated successfully' });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: 'An error occurred while processing the order' });
+    }
+}
 
 
-module.exports = { getBooks, updateBook, getOrderDetail, addBook, getOverview,getPendingDeliveryRequests,requestApprove,requestReject };
+
+
+module.exports = { getBooks, updateBook, getOrderDetail, orderApprove,addBook,getDeliveryPerson, getOverview,getPendingDeliveryRequests,requestApprove,requestReject };

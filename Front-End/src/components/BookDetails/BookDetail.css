@@ -239,3 +239,31 @@
     display: flex;
     align-items: center;
 }
+.star-rating {
+    display: flex;
+    gap: 2px; /* Optional: adds spacing between stars */
+}
+
+.star {
+    font-size: 1.5rem; /* Adjust size as needed */
+    color: gold; /* Gold color for stars */
+}
+
+.star.full {
+    color: gold;
+}
+
+.star.half {
+    color: gold;
+    position: relative;
+}
+
+.star.empty {
+    color: lightgray; /* Light gray for empty stars */
+}
+
+/* Optional: Adjust alignment */
+.review-rating {
+    display: flex;
+    align-items: center;
+}

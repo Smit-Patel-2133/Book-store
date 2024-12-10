@@ -64,7 +64,8 @@ form {
   font-weight: 500;
   font-size: 1.5rem;
   line-height: 1;
-  margin-bottom: 0.7rem;
+  margin-bottom: 20px
+
 }
 
 .input-container {
@@ -84,6 +85,7 @@ form {
   letter-spacing: 0.5px;
   border-radius: 25px;
   transition: 0.3s;
+  margin-bottom: 30px;
 }
 
 textarea.input {
@@ -311,9 +313,7 @@ textarea.input {
     font-size: 0.8rem;
   }
 
-  .title {
-    font-size: 1.15rem;
-  }
+
 
   .social-icons a {
     width: 30px;
@@ -344,4 +344,62 @@ textarea.input {
   text-decoration: none;
   color: #28a745;
   font-weight: bold;
+}
+.input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-container .input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+}
+
+.input-container .input:focus + label,
+.input-container .input:not(:placeholder-shown) + label {
+  transform: translateY(-20px);
+  font-size: 12px;
+  color: #555;
+}
+
+.input-container label {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 16px;
+  color: #aaa;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.input-container .input:focus + label,
+.input-container .input:not(:placeholder-shown) + label {
+  top: -15px;
+  left: 10px;
+  font-size: 12px;
+  color: #000;
+}
+
+.input-container textarea {
+  height: 100px;
+  resize: none;
+}
+
+.btn {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #555;
 }

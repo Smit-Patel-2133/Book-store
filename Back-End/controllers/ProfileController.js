@@ -31,6 +31,26 @@ const getuserInfo = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+async function getOrderPer(req, res) {
+    const { email } = req.body;
+    try {
+        console.log("Fetching orders for email:", email);
+
+        // Connect to the database
+        const db = await connectToDatabase();
+        const orderCollection = db.collection('order_details'); // Access the `order_details` collection
+
+        // Fetch all orders for the given email
+        const orders = await orderCollection.find({ userId: email }).toArray();
+
+        // Return the fetched orders as a response
+        res.json(orders);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'An error occurred while fetching orders.' });
+    }
+}
 
 
-module.exports = { getuserInfo };
+
+module.exports = { getuserInfo,getOrderPer };

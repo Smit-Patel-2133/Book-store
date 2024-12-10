@@ -71,7 +71,7 @@ const NavigationBar = () => {
                     <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
                         <li><NavLink to="/home_page" exact>Home</NavLink></li>
                         <li><NavLink to="/books">Books</NavLink></li>
-                        <li><NavLink to="/blog">Blog</NavLink></li>
+                        {/*<li><NavLink to="/blog">Blog</NavLink></li>*/}
                         <li><NavLink to="/contact">Contact</NavLink></li>
                         {user.isLogedin && <li><NavLink to="/userProfile">Profile</NavLink></li>}
                         {user.email === 'stories@makz.com' && <li><NavLink to="/admin">Dashboard</NavLink></li>}
@@ -127,7 +127,7 @@ const NavigationBar = () => {
                             <div className="dropdown-menu">
                                 <button onClick={() => navigate("/home_page")}>Home</button>
                                 <button onClick={() => navigate("/books")}>Books</button>
-                                <button onClick={() => navigate("/blog")}>Blog</button>
+                                {/*<button onClick={() => navigate("/blog")}>Blog</button>*/}
                                 <button onClick={() => navigate("/contact")}>Contact</button>
                                 {user.isLogedin && <button onClick={() => navigate("/userProfile")}>Profile</button>}
                                 {user.email === 'stories@makz.com' && <NavLink to="/admin">Dashboard</NavLink>}

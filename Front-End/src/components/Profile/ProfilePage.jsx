@@ -1,58 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ProfilePage.css';
+import './ProfilePage.css'; // Import CSS for styling
 import NavigationBar from "../NavigationBar/NavigationBar.jsx";
 import { useSelector } from "react-redux";
 import profilePic from '../../assets/images/profile/4.png';
 
-const ProfilePage = () => {
+const OrderDetails = () => {
     const [userData, setUserData] = useState(null);
+    const [orderDetails, setOrderDetails] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);  // State for handling errors
+    const [error, setError] = useState(null);
     const user = useSelector(state => state.user_info.auth);
 
     useEffect(() => {
-        // Define an async function to fetch user data
         const fetchUserData = async () => {
             try {
                 console.log("Fetching user data for email:", user.email);
                 const response = await axios.post('http://localhost:3000/api/profile/userInfo', { email: user.email });
-                const userData = response.data;
-                console.log(userData);
-                setUserData(userData); // Update userData with response data
-                setLoading(false);  // Set loading to false once the data is fetched
+                setUserData(response.data);
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                setLoading(false);
                 setError("Failed to load user data. Please try again later.");
             }
         };
 
+        const fetchOrderDetails = async () => {
+            try {
+                const response = await axios.post('http://localhost:3000/api/profile/orders', { email: user.email });
+                console.log("Order Details:", response.data);
+                setOrderDetails(response.data);
+            } catch (error) {
+                console.error("Error fetching order details:", error);
+                setError("Failed to load order details. Please try again later.");
+            }
+        };
+
         if (user.email) {
-            fetchUserData();
+            Promise.all([fetchUserData(), fetchOrderDetails()])
+                .finally(() => setLoading(false));
         }
+    }, [user.email]);
 
-    }, [user.email]); // Dependency array to re-fetch if user.email changes
-
-    // If data is loading, show a loading spinner or message
     if (loading) {
-        return <p>Loading...</p>;
+        return <p>Loading user and order details...</p>;
     }
 
-    // If there's an error, display an error message
     if (error) {
         return <p>{error}</p>;
     }
-
-    // Default or static profile picture
-    console.log(userData);
 
     return (
         <>
             <NavigationBar />
             <div className="profile-page">
                 <div className="profile-header">
-                    <img src={profilePic} alt="Profile" className="profile-pic" />
+                    <img src={profilePic} alt="Profile" className="profile-pic"/>
                     {userData ? (
                         <>
                             <h2 className="profile-username">{userData.username || 'Username not available'}</h2>
@@ -74,9 +76,49 @@ const ProfilePage = () => {
                         <p><strong>Mobile Number:</strong> {userData.mobileNumber || 'N/A'}</p>
                     </div>
                 )}
+                <div className="order-details-container">
+                    <h2>Order Details</h2>
+                    {orderDetails.length > 0 ? (
+                        orderDetails.map((order) => (
+                            <div key={order._id} className="order-entry">
+                                <p><strong>Order ID:</strong> {order.orderId}</p>
+                                <div className="order-books">
+                                    <h4>Books in this Order:</h4>
+                                    {order.items && order.items.length > 0 ? (
+                                        <ul>
+                                            {order.items.map((item) => (
+                                                <li key={item.itemId}>{item.title}</li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <p>No books found for this order.</p>
+                                    )}
+                                </div>
+                                <p><strong>Amount:</strong> Rs. {order.orderAmount.toFixed(2)}</p>
+                                <p><strong>Payment Mode:</strong> {order.paymentMode}</p>
+                                <p><strong>Payment Status:</strong> {order.paymentStatus}</p>
+                                <p><strong>Date:</strong> {new Date(order.date).toLocaleDateString()}</p>
+                                <p><strong>Time:</strong> {order.time}</p>
+                                <p><strong>User ID:</strong> {order.userId}</p>
+                                <p><strong>Status:</strong> {order.status}</p>
+
+                                <hr/>
+                            </div>
+                        ))
+                    ) : (
+                        <>
+                            <p>No order details found.</p>
+                            <div className="alternative-details">
+                                <h3>Profile Information</h3>
+                                <p>Your order details are not available at the moment.</p>
+                                <p>For assistance, please contact support or check your account for order status.</p>
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
         </>
     );
 };
 
-export default ProfilePage;
+export default OrderDetails;

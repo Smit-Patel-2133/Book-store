@@ -28,7 +28,9 @@ const Sidebar = ({ orders }) => { // Receive orders as props
     const handleRequest = () => {
         navigate('/PersonRequest',{state: { orders } });
     }
-
+    const handleContact = () => {
+        navigate('/adminContactUser',{state: { orders } });
+    }
     return (
         <div className="sidebar">
             <h2>STORIES</h2>
@@ -40,7 +42,8 @@ const Sidebar = ({ orders }) => { // Receive orders as props
                 <li onClick={handleOrderClick}><FaShoppingCart/> Orders</li>
                 {/* Orders section */}
                 <li onClick={handleRequest}><FaClipboardList/> Request</li>
-                <li><FaUserCog/> Account</li>
+                <li onClick={handleContact}><FaClipboardList/> Contact Details</li>
+                {/*<li><FaUserCog/> Account</li>*/}
                 {/* User account settings */}
             </ul>
         </div>

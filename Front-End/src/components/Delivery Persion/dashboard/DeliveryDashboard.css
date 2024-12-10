@@ -1,33 +1,143 @@
-/* DeliveryDashboard.css */
 .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
-    font-family: Arial, sans-serif;
+    padding: 30px;
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    max-width: 900px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loading h1 {
+    color: #007bff;
+}
+
+h1, h2, h3, h4 {
+    margin-bottom: 15px;
+    color: #2c3e50;
 }
 
 .status-text {
-    font-size: 5rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.pending {
-    color: orange;
-}
-
-.rejected {
-    color: red;
-}
-
-.approved {
-    color: green;
+    color: #2c3e50;
 }
 
 .status-message {
     font-size: 1.5rem;
-    color: black;
+    font-weight: bold;
+}
+
+.additional-message {
+    font-size: 1.2rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+.order-details {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-details h3 {
+    color: #007bff;
+}
+
+.order-details p, .order-details ul {
+    color: #333;
+}
+
+.order-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-details li {
+    padding: 5px 0;
+}
+
+/* Styling for specific status messages */
+.pending {
+    border-left: 5px solid orange;
+}
+
+.rejected {
+    border-left: 5px solid red;
+}
+
+.approved {
+    border-left: 5px solid green;
+}
+
+.pending .status-text {
+    color: orange;
+}
+
+.rejected .status-text {
+    color: red;
+}
+
+.approved .status-text {
+    color: green;
+}
+.dashboard-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.status-buttons {
+    margin-top: 20px;
+}
+
+.status-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.status-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.status-info {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+.order-details {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.order-details h3, .order-details h4 {
+    margin-top: 0;
+}
+
+.order-details p {
+    margin: 5px 0;
+}
+
+.order-details ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-details li {
+    padding: 3px 0;
 }
