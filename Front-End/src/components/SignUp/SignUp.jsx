@@ -109,6 +109,7 @@ const Signup = () => {
                     </NavLink>
                 </div>
             </div>
+            
         </div>
     );
 };
